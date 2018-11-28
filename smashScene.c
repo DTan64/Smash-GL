@@ -39,11 +39,15 @@ int fov = 55;     // Field of view
 int fp = 0;
 double rotation = 0.0;
 
+// TODO: Implement first person view
 double fpx = 0.0;
 double fpz = 0.0;
 double epx = 0.0;
 double epy = 0.0;
 double epz = 5.0;
+
+unsigned int texture[2]; // Texture names
+
 
 /*
  *  Convenience routine to output raster text
@@ -210,56 +214,69 @@ static void stage(double x, double y, double z)
   glPushMatrix();
   glTranslated(x, y, z);
   glScaled(5, .5, 2);
+  glEnable(GL_TEXTURE_2D);
+  glBindTexture(GL_TEXTURE_2D,texture[0]);
   glBegin(GL_QUADS);
-  glColor3f(0.09,.46,.14); // rbg divided by 255
+  //glColor3f(0.09,.46,.14); // rbg divided by 255
 
-  // Front/Back
-  glVertex3f(-.5, 0, 1.5);
-  glVertex3f(0.5, 0, 1.5);
-  glVertex3f(0.5, -1, 1.5);
-  glVertex3f(-0.5, -1, 1.5);
+  // Front
+  glTexCoord2d(0,1); glVertex3f(-.5, 0, 1.5);
+  glTexCoord2d(1,1); glVertex3f(0, 0, 1.5);
+  glTexCoord2d(1,0); glVertex3f(0, -2, 1.5);
+  glTexCoord2d(0,0); glVertex3f(-0.5, -2, 1.5);
 
-  glVertex3f(-.5, 0, -1.5);
-  glVertex3f(0.5, 0, -1.5);
-  glVertex3f(0.5, -1, -1.5);
-  glVertex3f(-0.5, -1, -1.5);
+  glTexCoord2d(0,1); glVertex3f(0, 0, 1.5);
+  glTexCoord2d(1,1); glVertex3f(0.5, 0, 1.5);
+  glTexCoord2d(1,0); glVertex3f(0.5, -2, 1.5);
+  glTexCoord2d(0,0); glVertex3f(0, -2, 1.5);
+
+  // Back
+  glTexCoord2d(0,1); glVertex3f(-.5, 0, -1.5);
+  glTexCoord2d(1,1); glVertex3f(0, 0, -1.5);
+  glTexCoord2d(1,0); glVertex3f(0, -2, -1.5);
+  glTexCoord2d(0,0); glVertex3f(-0.5, -2, -1.5);
+
+  glTexCoord2d(0,1); glVertex3f(0, 0, -1.5);
+  glTexCoord2d(1,1); glVertex3f(0.5, 0, -1.5);
+  glTexCoord2d(1,0); glVertex3f(0.5, -2, -1.5);
+  glTexCoord2d(0,0); glVertex3f(0, -2, -1.5);
 
   // Front sides
-  glVertex3f(-1, 0, .75);
-  glVertex3f(-0.5, 0, 1.5);
-  glVertex3f(-0.5, -1, 1.5);
-  glVertex3f(-1, -1, .75);
+  glTexCoord2d(0,1); glVertex3f(1, 0, .75);
+  glTexCoord2d(1,1); glVertex3f(0.5, 0, 1.5);
+  glTexCoord2d(1,0); glVertex3f(0.5, -2, 1.5);
+  glTexCoord2d(0,0); glVertex3f(1, -2, .75);
 
-  glVertex3f(1, 0, .75);
-  glVertex3f(0.5, 0, 1.5);
-  glVertex3f(0.5, -1, 1.5);
-  glVertex3f(1, -1, .75);
+  glTexCoord2d(0,1); glVertex3f(-1, 0, .75);
+  glTexCoord2d(1,1); glVertex3f(-0.5, 0, 1.5);
+  glTexCoord2d(1,0); glVertex3f(-0.5, -2, 1.5);
+  glTexCoord2d(0,0); glVertex3f(-1, -2, .75);
 
   // Ledges
-  glVertex3f(-1, 0, -.75);
-  glVertex3f(-1, 0, .75);
-  glVertex3f(-1, -1, .75);
-  glVertex3f(-1, -1, -.75);
+  glTexCoord2d(0,1); glVertex3f(1, 0, -.75);
+  glTexCoord2d(1,1); glVertex3f(1, 0, .75);
+  glTexCoord2d(1,0); glVertex3f(1, -2, .75);
+  glTexCoord2d(0,0); glVertex3f(1, -2, -.75);
 
-  glVertex3f(1, 0, -.75);
-  glVertex3f(1, 0, .75);
-  glVertex3f(1, -1, .75);
-  glVertex3f(1, -1, -.75);
+  glTexCoord2d(0,1); glVertex3f(-1, 0, -.75);
+  glTexCoord2d(1,1); glVertex3f(-1, 0, .75);
+  glTexCoord2d(1,0); glVertex3f(-1, -2, .75);
+  glTexCoord2d(0,0); glVertex3f(-1, -2, -.75);
 
   // Back sides
-  glVertex3f(-1, 0, -.75);
-  glVertex3f(-0.5, 0, -1.5);
-  glVertex3f(-0.5, -1, -1.5);
-  glVertex3f(-1, -1, -.75);
+  glTexCoord2d(0,1); glVertex3f(1, 0, -.75);
+  glTexCoord2d(1,1); glVertex3f(0.5, 0, -1.5);
+  glTexCoord2d(1,0); glVertex3f(0.5, -2, -1.5);
+  glTexCoord2d(0,0); glVertex3f(1, -2, -.75);
 
-  glVertex3f(1, 0, -.75);
-  glVertex3f(0.5, 0, -1.5);
-  glVertex3f(0.5, -1, -1.5);
-  glVertex3f(1, -1, -.75);
+  glTexCoord2d(0,1); glVertex3f(-1, 0, -.75);
+  glTexCoord2d(1,1); glVertex3f(-0.5, 0, -1.5);
+  glTexCoord2d(1,0); glVertex3f(-0.5, -2, -1.5);
+  glTexCoord2d(0,0); glVertex3f(-1, -2, -.75);
 
   glEnd();
   glPopMatrix();
-
+  glDisable(GL_TEXTURE_2D);
 
 
 
@@ -435,6 +452,7 @@ int main(int argc,char* argv[])
    //  Tell GLUT to call "key" when a key is pressed
    glutKeyboardFunc(keyboard);
    //glutIdleFunc(update);
+   texture[0] = LoadTexBMP("grass_side.bmp");
    //  Pass control to GLUT so it can interact with the user
    glutMainLoop();
    return 0;
