@@ -1,0 +1,11 @@
+
+.DS_Store
+CSCIx229.a
+errcheck.o
+fatal.o
+loadtexbmp.o
+object.o
+print.o
+project.o
+smashScene
+smashScene.o

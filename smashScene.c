@@ -30,6 +30,7 @@
 
 int th=0;         //  Azimuth of view angle
 int ph=0;         //  Elevation of view angle
+int zh = 0;
 int axes=1;       //  Display axes
 int mode=1;       //  Projection type
 double dim=5;     // Size of scene
@@ -43,26 +44,6 @@ double fpz = 0.0;
 double epx = 0.0;
 double epy = 0.0;
 double epz = 5.0;
-
-// Light values
-int one       =   1;  // Unit value
-int distance  =   5;  // Light distance
-int inc       =  10;  // Ball increment
-int smooth    =   1;  // Smooth/Flat shading
-int local     =   0;  // Local Viewer Model
-int emission  =   0;  // Emission intensity (%)
-int ambient   =  30;  // Ambient intensity (%)
-int diffuse   = 100;  // Diffuse intensity (%)
-int specular  =   0;  // Specular intensity (%)
-int shininess =   0;  // Shininess (power of two)
-float shiny   =   1;  // Shininess (value)
-int zh        =  90;  // Light azimuth
-float ylight  =   0;  // Elevation of light
-int xpl = 1;
-int ypl = 0;
-int zpl = 1;
-int move = 1;
-unsigned int texture[2]; // Texture names
 
 /*
  *  Convenience routine to output raster text
@@ -122,32 +103,97 @@ static void platform(double x, double y, double z)
   int th, ph;
   const int d = 5;
 
+  // Bottom
   glPushMatrix();
   glTranslated(x, y, z);
-   glScaled(.5, .5, .5);
-
-  // Sand
-  for (ph = 0; ph < 180; ph += d)
-  {
-     glBegin(GL_QUAD_STRIP);
-     glColor3f(.76, .70, .5);
-
-     for (th = 0; th <= 360; th += d)
-     {
-        Vertex(th,ph);
-        Vertex(th,ph+d);
-     }
-     glEnd();
-  }
-
-  // Bottom of island
-  glBegin(GL_TRIANGLE_FAN);
-  glColor3f(.102, .51, 0);
-  for(th = 0; th <= 360; th += d) {
+  glScaled(1, 3, .5);
+  glBegin(GL_QUAD_STRIP);
+  glColor3f(.55, .33, .10);
+  //glColor3f(1, 1, .140);
+  for(th = 0; th <= 180; th += d) {
+    glVertex3f(Cos(th), 1, Sin(th));
     glVertex3f(Cos(th), 0, Sin(th));
   }
   glEnd();
   glPopMatrix();
+
+  // Top
+  glPushMatrix();
+  glTranslated(x , y - .125, z - .5);
+  glScaled(1, 3.25, .5);
+  glBegin(GL_QUADS);
+  glColor3f(.96,.81,.6); // rbg divided by 255
+  glVertex3f(-1,0, 1);
+  glVertex3f(+1,0, 1);
+  glVertex3f(+1,+1, 1);
+  glVertex3f(-1,+1, 1);
+  glEnd();
+  glPopMatrix();
+
+  // End of platforms
+  glPushMatrix();
+  glTranslated(x, y - .125, z);
+  glScaled(1, .125, .5);
+  glBegin(GL_QUAD_STRIP);
+  glColor3f(.90, .85,.41);
+  for(th = 0; th <= 180; th += d) {
+    glVertex3f(Cos(th), 1, Sin(th));
+    glVertex3f(Cos(th), 0, Sin(th));
+  }
+  glEnd();
+  glPopMatrix();
+
+  glPushMatrix();
+  glTranslated(x, y + 3, z);
+  glScaled(1, .125, .5);
+  glBegin(GL_QUAD_STRIP);
+  glColor3f(.90, .85,.41);
+  for(th = 0; th <= 180; th += d) {
+    glVertex3f(Cos(th), 1, Sin(th));
+    glVertex3f(Cos(th), 0, Sin(th));
+  }
+  glEnd();
+  glPopMatrix();
+
+
+  // Sides
+  glPushMatrix();
+  glTranslated(x, y - .125, z);
+  glScaled(1,1,.5);
+  glBegin(GL_TRIANGLE_FAN);
+  glColor3f(.76,.64,.27); // rbg divided by 255
+  glVertex3f(0,0,0);
+  for(th = 0; th <= 180; th+= d) {
+    glVertex3f(Cos(th), 0, Sin(th));
+  }
+  glEnd();
+  glPopMatrix();
+
+  glPushMatrix();
+  glTranslated(x, y + 3.125, z);
+  glScaled(1,1,.5);
+  glBegin(GL_TRIANGLE_FAN);
+  glColor3f(.76,.64,.27); // rbg divided by 255
+  glVertex3f(0,0,0);
+  for(th = 0; th <= 180; th+= d) {
+    glVertex3f(Cos(th), 0, Sin(th));
+  }
+  glEnd();
+  glPopMatrix();
+
+  // glPushMatrix();
+  // glTranslated(x, y + 3, z);
+  // glScaled(1,1,.5);
+  // glBegin(GL_TRIANGLE_FAN);
+  // glColor3f(.96,.81,.6); // rbg divided by 255
+  // glVertex3f(0,0,0);
+  // for(th = 0; th <= 180; th+= d) {
+  //   glVertex3f(Cos(th), 0, Sin(th));
+  // }
+  // glEnd();
+  // glPopMatrix();
+
+
 
 
 
@@ -279,6 +325,14 @@ void keyboard(unsigned char key,int x,int y)
 
    if(key == 'a') {
      axes = 1 - axes;
+   }
+
+   if(key == '+') {
+     dim -= 1;
+   }
+
+   if(key == '-') {
+     dim += 1;
    }
 
    ProjectView();
