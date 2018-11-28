@@ -181,28 +181,56 @@ static void platform(double x, double y, double z)
   glEnd();
   glPopMatrix();
 
-  // glPushMatrix();
-  // glTranslated(x, y + 3, z);
-  // glScaled(1,1,.5);
-  // glBegin(GL_TRIANGLE_FAN);
-  // glColor3f(.96,.81,.6); // rbg divided by 255
-  // glVertex3f(0,0,0);
-  // for(th = 0; th <= 180; th+= d) {
+}
+
+static void stage(double x, double y, double z)
+{
+
+
+  int th, ph;
+  const int d = 5;
+
+  // Top
+  glPushMatrix();
+  glTranslated(x , y - .125, z - .5);
+  glRotatef(90, 1, 0, 0);
+  glScaled(5, 3, 2);
+  glBegin(GL_POLYGON);
+  glColor3f(.96,.81,.6); // rbg divided by 255
+  glVertex3f(-1, .5, 0);
+  glVertex3f(-.5, 1, 0);
+  glVertex3f(0.5, 1, 0);
+  glVertex3f(1, .5, 0);
+  glVertex3f(1, -.5, 0);
+  glVertex3f(0.5, -1, 0);
+  glVertex3f(-.5, -1, 0);
+  glVertex3f(-1, -.5, 0);
+
+
+
+  // glBegin(GL_QUAD_STRIP);
+  // glColor3f(.55, .33, .10);
+  // //glColor3f(1, 1, .140);
+  // for(th = 0; th <= 180; th += d) {
+  //   glVertex3f(Cos(th), 1, Sin(th));
   //   glVertex3f(Cos(th), 0, Sin(th));
   // }
   // glEnd();
   // glPopMatrix();
 
 
+  // Trapazoid for platforms?
+  // glVertex3f(-1, 0, 0);
+  // glVertex3f(-.5, .5, 0);
+  // glVertex3f(.5, .5, 0);
+  // glVertex3f(1, 0, 0);
 
-
-
-
-
-
-
-
-
+  // glVertex3f(-1,0, 1);
+  // glVertex3f(+1,0, 1);
+  // glVertex3f(+1,+1, 1);
+  // glVertex3f(-1,+1, 1);
+  glEnd();
+  glPopMatrix();
 
 
 
@@ -243,7 +271,10 @@ void display()
    }
 
 
-   platform(0, 0, 0);
+   //platform(0, 0, 0);
+   stage(0,0,0);
+
+
 
    //  White
    glColor3f(1,1,1);
