@@ -101,46 +101,6 @@ static void Vertex(double th,double ph)
    glVertex3d(x,y,z);
 }
 
-static void platformSide(double x, double y, double z)
-{
-
-  int th, ph;
-  const int d = 5;
-
-  // glPushMatrix();
-  // glTranslated(x, y + 4, z);
-  // glScaled(1,1, .5);
-  // glEnable(GL_TEXTURE_2D);
-  // glBindTexture(GL_TEXTURE_2D,texture[1]);
-  // glBegin(GL_TRIANGLE_FAN);
-  // glVertex3f(0,0,0);
-  // for(th = 0; th <= 180; th += d) {
-  //   glTexCoord2d(0.5, 1); glVertex3f(Cos(th), 0, Sin(th));
-  // }
-  // glEnd();
-  // glPopMatrix();
-  // glDisable(GL_TEXTURE_2D);
-
-  // Top
-  glPushMatrix();
-  glTranslated(x , y - 1.5, z - .5);
-  glScaled(1, 3, .5);
-  glEnable(GL_TEXTURE_2D);
-  glBindTexture(GL_TEXTURE_2D,texture[2]);
-  glBegin(GL_QUADS);
-  //glColor3f(.96,.81,.6); // rbg divided by 255
-  glTexCoord2d(1, 0); glVertex3f(-1,0, 1);
-  glTexCoord2d(1, 1); glVertex3f(+1,0, 1);
-  glTexCoord2d(0.5,1); glVertex3f(+1,+1, 1);
-  glTexCoord2d(0.5,0); glVertex3f(-1,+1, 1);
-  glEnd();
-  glPopMatrix();
-  glDisable(GL_TEXTURE_2D);
-
-
-
-}
-
 static void platform(double x, double y, double z)
 {
 
@@ -190,7 +150,6 @@ static void platform(double x, double y, double z)
   glScaled(1, 3, .5);
   glBindTexture(GL_TEXTURE_2D,texture[2]);
   glBegin(GL_QUADS);
-  //glColor3f(.96,.81,.6); // rbg divided by 255
   glTexCoord2d(1, 0); glVertex3f(-1,0, 1);
   glTexCoord2d(1, 1); glVertex3f(+1,0, 1);
   glTexCoord2d(0.5,1); glVertex3f(+1,+1, 1);
@@ -203,24 +162,39 @@ static void platform(double x, double y, double z)
   glTranslated(x, y + 1.5, z);
   glScaled(1,1,.5);
   glBegin(GL_TRIANGLE_FAN);
-  //glColor3f(.76,.64,.27); // rbg divided by 255
   glVertex3f(0,0,0);
   for(th = 0; th <= 180; th+= d) {
     glTexCoord2d(0.5, 1); glVertex3f(Cos(th), 0, Sin(th));
   }
   glEnd();
+  glPopMatrix();
 
+  // For some reason I need to render this twice for the sides to work
+  glPushMatrix();
+  glTranslated(x , y - 1.5, z - .5);
+  glScaled(1, 3, .5);
+  glBindTexture(GL_TEXTURE_2D,texture[2]);
+  glBegin(GL_QUADS);
+  glTexCoord2d(1, 0); glVertex3f(-1,0, 1);
+  glTexCoord2d(1, 1); glVertex3f(+1,0, 1);
+  glTexCoord2d(0.5,1); glVertex3f(+1,+1, 1);
+  glTexCoord2d(0.5,0); glVertex3f(-1,+1, 1);
+  glEnd();
+  glPopMatrix();
+
+  // Sides
+  glPushMatrix();
+  glTranslated(x, y - 1.5, z);
+  glScaled(1,1,.5);
   glBegin(GL_TRIANGLE_FAN);
-  glVertex3f(0,-4,0);
+  glVertex3f(0,0,0);
   for(th = 0; th <= 180; th+= d) {
-    glTexCoord2d(1, 1); glVertex3f(Cos(th), -4, Sin(th));
+    glTexCoord2d(0.5, 1); glVertex3f(Cos(th), 0, Sin(th));
   }
   glEnd();
   glPopMatrix();
   glDisable(GL_TEXTURE_2D);
 
-  // platformSide(0,0,0);
-  // platformSide(0,-1,0);
 
 
 
