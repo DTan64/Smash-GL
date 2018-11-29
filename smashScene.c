@@ -46,7 +46,7 @@ double epx = 0.0;
 double epy = 0.0;
 double epz = 5.0;
 
-unsigned int texture[2]; // Texture names
+unsigned int texture[5]; // Texture names
 
 
 /*
@@ -101,89 +101,128 @@ static void Vertex(double th,double ph)
    glVertex3d(x,y,z);
 }
 
-static void platform(double x, double y, double z)
+static void platformSide(double x, double y, double z)
 {
 
   int th, ph;
   const int d = 5;
 
+  // glPushMatrix();
+  // glTranslated(x, y + 4, z);
+  // glScaled(1,1, .5);
+  // glEnable(GL_TEXTURE_2D);
+  // glBindTexture(GL_TEXTURE_2D,texture[1]);
+  // glBegin(GL_TRIANGLE_FAN);
+  // glVertex3f(0,0,0);
+  // for(th = 0; th <= 180; th += d) {
+  //   glTexCoord2d(0.5, 1); glVertex3f(Cos(th), 0, Sin(th));
+  // }
+  // glEnd();
+  // glPopMatrix();
+  // glDisable(GL_TEXTURE_2D);
+
+  // Top
+  glPushMatrix();
+  glTranslated(x , y - 1.5, z - .5);
+  glScaled(1, 3, .5);
+  glEnable(GL_TEXTURE_2D);
+  glBindTexture(GL_TEXTURE_2D,texture[2]);
+  glBegin(GL_QUADS);
+  //glColor3f(.96,.81,.6); // rbg divided by 255
+  glTexCoord2d(1, 0); glVertex3f(-1,0, 1);
+  glTexCoord2d(1, 1); glVertex3f(+1,0, 1);
+  glTexCoord2d(0.5,1); glVertex3f(+1,+1, 1);
+  glTexCoord2d(0.5,0); glVertex3f(-1,+1, 1);
+  glEnd();
+  glPopMatrix();
+  glDisable(GL_TEXTURE_2D);
+
+
+
+}
+
+static void platform(double x, double y, double z)
+{
+
+  int th, ph;
+  const int d = 5;
+  float pi = 3.141592654f;
+  float numberOfSegments = 64;
+  float angleIncrement = (2.0f * pi) / numberOfSegments;
+  float textureCoordinateIncrement = 1.0 / 32;
+
   // Bottom
   glPushMatrix();
   glTranslated(x, y, z);
   glScaled(1, 3, .5);
+  glEnable(GL_TEXTURE_2D);
+  glBindTexture(GL_TEXTURE_2D,texture[3]);
+
   glBegin(GL_QUAD_STRIP);
-  glColor3f(.55, .33, .10);
-  //glColor3f(1, 1, .140);
-  for(th = 0; th <= 180; th += d) {
-    glVertex3f(Cos(th), 1, Sin(th));
-    glVertex3f(Cos(th), 0, Sin(th));
+  for (unsigned int i = 0; i <= 32; ++i)
+  {
+      float c = cos(angleIncrement * i);
+      float s = sin(angleIncrement * i);
+      glTexCoord2f( textureCoordinateIncrement * i, 0); glVertex3f( c, 0, s);
+      glTexCoord2f( textureCoordinateIncrement * i, 1.0f); glVertex3f( c, .5, s);
+  }
+  glEnd();
+  glPopMatrix();
+
+  glPushMatrix();
+  glTranslated(x, y - 1.5, z);
+  glScaled(1, 3, .5);
+  glBegin(GL_QUAD_STRIP);
+  for (unsigned int i = 0; i <= 32; ++i)
+  {
+      float c = cos(angleIncrement * i);
+      float s = sin(angleIncrement * i);
+
+      glTexCoord2f( textureCoordinateIncrement * i, 1.0f); glVertex3f( c, 0, s);
+      glTexCoord2f( textureCoordinateIncrement * i, 0); glVertex3f( c, .5, s);
   }
   glEnd();
   glPopMatrix();
 
   // Top
   glPushMatrix();
-  glTranslated(x , y - .125, z - .5);
-  glScaled(1, 3.25, .5);
+  glTranslated(x , y - 1.5, z - .5);
+  glScaled(1, 3, .5);
+  glBindTexture(GL_TEXTURE_2D,texture[2]);
   glBegin(GL_QUADS);
-  glColor3f(.96,.81,.6); // rbg divided by 255
-  glVertex3f(-1,0, 1);
-  glVertex3f(+1,0, 1);
-  glVertex3f(+1,+1, 1);
-  glVertex3f(-1,+1, 1);
+  //glColor3f(.96,.81,.6); // rbg divided by 255
+  glTexCoord2d(1, 0); glVertex3f(-1,0, 1);
+  glTexCoord2d(1, 1); glVertex3f(+1,0, 1);
+  glTexCoord2d(0.5,1); glVertex3f(+1,+1, 1);
+  glTexCoord2d(0.5,0); glVertex3f(-1,+1, 1);
   glEnd();
   glPopMatrix();
-
-  // End of platforms
-  glPushMatrix();
-  glTranslated(x, y - .125, z);
-  glScaled(1, .125, .5);
-  glBegin(GL_QUAD_STRIP);
-  glColor3f(.90, .85,.41);
-  for(th = 0; th <= 180; th += d) {
-    glVertex3f(Cos(th), 1, Sin(th));
-    glVertex3f(Cos(th), 0, Sin(th));
-  }
-  glEnd();
-  glPopMatrix();
-
-  glPushMatrix();
-  glTranslated(x, y + 3, z);
-  glScaled(1, .125, .5);
-  glBegin(GL_QUAD_STRIP);
-  glColor3f(.90, .85,.41);
-  for(th = 0; th <= 180; th += d) {
-    glVertex3f(Cos(th), 1, Sin(th));
-    glVertex3f(Cos(th), 0, Sin(th));
-  }
-  glEnd();
-  glPopMatrix();
-
 
   // Sides
   glPushMatrix();
-  glTranslated(x, y - .125, z);
+  glTranslated(x, y + 1.5, z);
   glScaled(1,1,.5);
   glBegin(GL_TRIANGLE_FAN);
-  glColor3f(.76,.64,.27); // rbg divided by 255
+  //glColor3f(.76,.64,.27); // rbg divided by 255
   glVertex3f(0,0,0);
   for(th = 0; th <= 180; th+= d) {
-    glVertex3f(Cos(th), 0, Sin(th));
+    glTexCoord2d(0.5, 1); glVertex3f(Cos(th), 0, Sin(th));
   }
   glEnd();
-  glPopMatrix();
 
-  glPushMatrix();
-  glTranslated(x, y + 3.125, z);
-  glScaled(1,1,.5);
   glBegin(GL_TRIANGLE_FAN);
-  glColor3f(.76,.64,.27); // rbg divided by 255
-  glVertex3f(0,0,0);
+  glVertex3f(0,-4,0);
   for(th = 0; th <= 180; th+= d) {
-    glVertex3f(Cos(th), 0, Sin(th));
+    glTexCoord2d(1, 1); glVertex3f(Cos(th), -4, Sin(th));
   }
   glEnd();
   glPopMatrix();
+  glDisable(GL_TEXTURE_2D);
+
+  // platformSide(0,0,0);
+  // platformSide(0,-1,0);
+
+
 
 }
 
@@ -217,7 +256,6 @@ static void stage(double x, double y, double z)
   glEnable(GL_TEXTURE_2D);
   glBindTexture(GL_TEXTURE_2D,texture[0]);
   glBegin(GL_QUADS);
-  //glColor3f(0.09,.46,.14); // rbg divided by 255
 
   // Front
   glTexCoord2d(0,1); glVertex3f(-.5, 0, 1.5);
@@ -225,10 +263,21 @@ static void stage(double x, double y, double z)
   glTexCoord2d(1,0); glVertex3f(0, -2, 1.5);
   glTexCoord2d(0,0); glVertex3f(-0.5, -2, 1.5);
 
+  glVertex3f(-.5, -2, 1.5);
+  glVertex3f(0, -2, 1.5);
+  glVertex3f(0, -10, 1);
+  glVertex3f(-0.5, -10, 1);
+
   glTexCoord2d(0,1); glVertex3f(0, 0, 1.5);
   glTexCoord2d(1,1); glVertex3f(0.5, 0, 1.5);
   glTexCoord2d(1,0); glVertex3f(0.5, -2, 1.5);
   glTexCoord2d(0,0); glVertex3f(0, -2, 1.5);
+
+  glVertex3f(0, -2, 1.5);
+  glVertex3f(0.5, -2, 1.5);
+  glVertex3f(0.5, -10, 1);
+  glVertex3f(0, -10, 1);
+
 
   // Back
   glTexCoord2d(0,1); glVertex3f(-.5, 0, -1.5);
@@ -279,10 +328,6 @@ static void stage(double x, double y, double z)
   glDisable(GL_TEXTURE_2D);
 
 
-
-
-
-
 }
 
 void update()
@@ -319,8 +364,10 @@ void display()
    }
 
 
-   //platform(0, 0, 0);
-   stage(0,0,0);
+   platform(0, 0, 0);
+   //stage(0,0,0);
+   //platformSide(0,0,0);
+   //platformSide(0,-1,0);
 
 
 
@@ -350,6 +397,7 @@ void display()
    //  Print the text string
    Print("Angle=%d,%d",th,ph);
    //  Render the scene
+   ErrCheck("display");
    glFlush();
    //  Make the rendered scene visible
    glutSwapBuffers();
@@ -453,7 +501,11 @@ int main(int argc,char* argv[])
    glutKeyboardFunc(keyboard);
    //glutIdleFunc(update);
    texture[0] = LoadTexBMP("grass_side.bmp");
+   texture[1] = LoadTexBMP("dirt_bottom.bmp");
+   texture[2] = LoadTexBMP("platform_top.bmp");
+   texture[3] = LoadTexBMP("platform_bottom.bmp");
    //  Pass control to GLUT so it can interact with the user
+   ErrCheck("init");
    glutMainLoop();
    return 0;
 }
