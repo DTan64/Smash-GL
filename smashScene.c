@@ -208,21 +208,24 @@ static void stage(double x, double y, double z)
   const int d = 5;
 
   // Top
-  // glPushMatrix();
-  // glTranslated(x, y, z);
-  // glScaled(5, 2, 3);
-  // glBegin(GL_POLYGON);
-  // glColor3f(0.96,.81,.6); // rbg divided by 255
-  // glVertex3f(-1,  0, .5);
-  // glVertex3f(-.5, 0,  1);
-  // glVertex3f(0.5, 0,  1);
-  // glVertex3f(1, 0, .5);
-  // glVertex3f(1, 0, -.5);
-  // glVertex3f(0.5, 0, -1);
-  // glVertex3f(-.5, 0, -1);
-  // glVertex3f(-1, 0, -.5);
-  // glEnd();
-  // glPopMatrix();
+  glPushMatrix();
+  glTranslated(x, y + 3, z);
+  glScaled(2,2,2);
+  glBegin(GL_POLYGON);
+  glColor3f(0.96,.81,.6); // rbg divided by 255
+  glVertex3f(-1,  0, .5);
+  glVertex3f(2, 0,  .5);
+
+  glVertex3f(3, 0,  -.5);
+  glVertex3f(3, 0, -2);
+
+  glVertex3f(2, 0, -3);
+  glVertex3f(-1, 0, -3);
+
+  glVertex3f(-2, 0, -2.2);
+  glVertex3f(-2, 0, -.5);
+  glEnd();
+  glPopMatrix();
 
   glPushMatrix();
   glTranslated(x, y + 3, z);
@@ -233,189 +236,61 @@ static void stage(double x, double y, double z)
 
   // Front
   glTexCoord2d(0,1); glVertex3f(-1, 0, .5);
-  glTexCoord2d(1,1); glVertex3f(2, 0, .5);
-  glTexCoord2d(1,0); glVertex3f(2, -.5, .5);
+  glTexCoord2d(1,1); glVertex3f(0.5, 0, .5);
+  glTexCoord2d(1,0); glVertex3f(0.5, -.5, .5);
   glTexCoord2d(0,0); glVertex3f(-1, -.5, .5);
 
-  // glTexCoord2d(0,1); glVertex3f(0, 0, 1.5);
-  // glTexCoord2d(1,1); glVertex3f(0.5, 0, 1.5);
-  // glTexCoord2d(1,0); glVertex3f(0.5, -2, 1.5);
-  // glTexCoord2d(0,0); glVertex3f(0, -2, 1.5);
-  //
-  // // Back
-  // glTexCoord2d(0,1); glVertex3f(-.5, 0, -1.5);
-  // glTexCoord2d(1,1); glVertex3f(0, 0, -1.5);
-  // glTexCoord2d(1,0); glVertex3f(0, -2, -1.5);
-  // glTexCoord2d(0,0); glVertex3f(-0.5, -2, -1.5);
-  //
-  // glTexCoord2d(0,1); glVertex3f(0, 0, -1.5);
-  // glTexCoord2d(1,1); glVertex3f(0.5, 0, -1.5);
-  // glTexCoord2d(1,0); glVertex3f(0.5, -2, -1.5);
-  // glTexCoord2d(0,0); glVertex3f(0, -2, -1.5);
-  //
-  // // Front sides
-  // glTexCoord2d(0,1); glVertex3f(1, 0, .75);
-  // glTexCoord2d(1,1); glVertex3f(0.5, 0, 1.5);
-  // glTexCoord2d(1,0); glVertex3f(0.5, -2, 1.5);
-  // glTexCoord2d(0,0); glVertex3f(1, -2, .75);
-  //
-  // glTexCoord2d(0,1); glVertex3f(-1, 0, .75);
-  // glTexCoord2d(1,1); glVertex3f(-0.5, 0, 1.5);
-  // glTexCoord2d(1,0); glVertex3f(-0.5, -2, 1.5);
-  // glTexCoord2d(0,0); glVertex3f(-1, -2, .75);
-  //
-  // // Ledges
-  // glTexCoord2d(0,1); glVertex3f(1, 0, -.75);
-  // glTexCoord2d(1,1); glVertex3f(1, 0, .75);
-  // glTexCoord2d(1,0); glVertex3f(1, -2, .75);
-  // glTexCoord2d(0,0); glVertex3f(1, -2, -.75);
-  //
-  // glTexCoord2d(0,1); glVertex3f(-1, 0, -.75);
-  // glTexCoord2d(1,1); glVertex3f(-1, 0, .75);
-  // glTexCoord2d(1,0); glVertex3f(-1, -2, .75);
-  // glTexCoord2d(0,0); glVertex3f(-1, -2, -.75);
-  //
-  // // Back sides
-  // glTexCoord2d(0,1); glVertex3f(1, 0, -.75);
-  // glTexCoord2d(1,1); glVertex3f(0.5, 0, -1.5);
-  // glTexCoord2d(1,0); glVertex3f(0.5, -2, -1.5);
-  // glTexCoord2d(0,0); glVertex3f(1, -2, -.75);
-  //
-  // glTexCoord2d(0,1); glVertex3f(-1, 0, -.75);
-  // glTexCoord2d(1,1); glVertex3f(-0.5, 0, -1.5);
-  // glTexCoord2d(1,0); glVertex3f(-0.5, -2, -1.5);
-  // glTexCoord2d(0,0); glVertex3f(-1, -2, -.75);
+  glTexCoord2d(0,1); glVertex3f(0.5, 0, .5);
+  glTexCoord2d(1,1); glVertex3f(2, 0, .5);
+  glTexCoord2d(1,0); glVertex3f(2, -.5, .5);
+  glTexCoord2d(0,0); glVertex3f(0.5, -.5, .5);
+
+  // Back
+  glTexCoord2d(0,1); glVertex3f(-1, 0, -3);
+  glTexCoord2d(1,1); glVertex3f(0.5, 0, -3);
+  glTexCoord2d(1,0); glVertex3f(0.5, -.5, -3);
+  glTexCoord2d(0,0); glVertex3f(-1, -.5, -3);
+
+  glTexCoord2d(0,1); glVertex3f(0.5, 0, -3);
+  glTexCoord2d(1,1); glVertex3f(2, 0, -3);
+  glTexCoord2d(1,0); glVertex3f(2, -.5, -3);
+  glTexCoord2d(0,0); glVertex3f(0.5, -.5, -3);
+
+  // Front sides
+  glTexCoord2d(0,1); glVertex3f(2, 0, .5);
+  glTexCoord2d(1,1); glVertex3f(3, 0, -.5);
+  glTexCoord2d(1,0); glVertex3f(3, -.5, -.5);
+  glTexCoord2d(0,0); glVertex3f(2, -.5, .5);
+
+  glTexCoord2d(0,1); glVertex3f(-1, 0, .5);
+  glTexCoord2d(1,1); glVertex3f(-2, 0, -.5);
+  glTexCoord2d(1,0); glVertex3f(-2, -.5, -.5);
+  glTexCoord2d(0,0); glVertex3f(-1, -.5, .5);
+
+  // Ledges
+  glTexCoord2d(0,1); glVertex3f(3, 0, -.5);
+  glTexCoord2d(1,1); glVertex3f(3, 0, -2);
+  glTexCoord2d(1,0); glVertex3f(3, -.5, -2);
+  glTexCoord2d(0,0); glVertex3f(3, -.5, -.5);
+
+  glTexCoord2d(0,1); glVertex3f(-2, 0, -.5);
+  glTexCoord2d(1,1); glVertex3f(-2, 0, -2.2);
+  glTexCoord2d(1,0); glVertex3f(-2, -.5, -2.2);
+  glTexCoord2d(0,0); glVertex3f(-2, -.5, -.5);
+
+  // Back sides
+  glTexCoord2d(0,1); glVertex3f(3, 0, -2);
+  glTexCoord2d(1,1); glVertex3f(2, 0, -3);
+  glTexCoord2d(1,0); glVertex3f(2, -.5, -3);
+  glTexCoord2d(0,0); glVertex3f(3, -.5, -2);
+
+  glTexCoord2d(0,1); glVertex3f(-2, 0, -2.2);
+  glTexCoord2d(1,1); glVertex3f(-1, 0, -3);
+  glTexCoord2d(1,0); glVertex3f(-1, -.5, -3);
+  glTexCoord2d(0,0); glVertex3f(-2, -.5, -2.2);
 
   glEnd();
   glPopMatrix();
-  //
-  // // Botoom Part of stage: Front
-  // glPushMatrix();
-  // glTranslated(x + 2, y, z);
-  // glScaled(1, .5, 2);
-  // glBindTexture(GL_TEXTURE_2D,texture[1]);
-  // glBegin(GL_QUADS);
-  // glTexCoord2f(0,1); glVertex3f(-.5, -2, 1.5);
-  // glTexCoord2f(1,1); glVertex3f(0.5, -2, 1.5);
-  // glTexCoord2f(1,0.2); glVertex3f(0.5, -5, 1.2);
-  // glTexCoord2f(0,0.2); glVertex3f(-0.5, -5, 1.2);
-  // glEnd();
-  //
-  // glTranslated(x - 1, y, z);
-  // glBegin(GL_QUADS);
-  // glTexCoord2f(0,1); glVertex3f(-.5, -2, 1.5);
-  // glTexCoord2f(1,1); glVertex3f(0.5, -2, 1.5);
-  // glTexCoord2f(1,0.2); glVertex3f(0.5, -5, 1.2);
-  // glTexCoord2f(0,0.2); glVertex3f(-0.5, -5, 1.2);
-  // glEnd();
-  //
-  // glTranslated(x - 1, y, z);
-  // glBegin(GL_QUADS);
-  // glTexCoord2f(0,1); glVertex3f(-.5, -2, 1.5);
-  // glTexCoord2f(1,1); glVertex3f(0.5, -2, 1.5);
-  // glTexCoord2f(1,0.2); glVertex3f(0.5, -5, 1.2);
-  // glTexCoord2f(0,0.2); glVertex3f(-0.5, -5, 1.2);
-  // glEnd();
-  //
-  // glTranslated(x - 1, y, z);
-  // glBegin(GL_QUADS);
-  // glTexCoord2f(0,1); glVertex3f(-.5, -2, 1.5);
-  // glTexCoord2f(1,1); glVertex3f(0.5, -2, 1.5);
-  // glTexCoord2f(1,0.2); glVertex3f(0.5, -5, 1.2);
-  // glTexCoord2f(0,0.2); glVertex3f(-0.5, -5, 1.2);
-  // glEnd();
-  //
-  // glTranslated(x - 1, y, z);
-  // glBegin(GL_QUADS);
-  // glTexCoord2f(0,1); glVertex3f(-.5, -2, 1.5);
-  // glTexCoord2f(1,1); glVertex3f(0.5, -2, 1.5);
-  // glTexCoord2f(1,0.2); glVertex3f(0.5, -5, 1.2);
-  // glTexCoord2f(0,0.2); glVertex3f(-0.5, -5, 1.2);
-  // glEnd();
-  // glPopMatrix();
-  //
-  // // Spike at bottom: Front
-  // glPushMatrix();
-  // glTranslated(x + 1.5, y - 2.5, z + 2.4);
-  // glBegin(GL_TRIANGLES);
-  // glTexCoord2f(0.1, 0.2); glVertex3f(0,0,0);
-  // glTexCoord2f(0.9, 0.2); glVertex3f(1,0, 0);
-  // glTexCoord2f(0.5, 0.1); glVertex3f(0.5,-.7, - 0.3);
-  // glEnd();
-  //
-  // glTranslated(x - 1, y, z);
-  // glBegin(GL_TRIANGLES);
-  // glTexCoord2f(0.1, 0.2); glVertex3f(0,0,0);
-  // glTexCoord2f(0.9, 0.2); glVertex3f(1,0, 0);
-  // glTexCoord2f(0.5, 0.1); glVertex3f(0.5,-.7, - 0.3);
-  // glEnd();
-  //
-  // glTranslated(x - 1, y, z);
-  // glBegin(GL_TRIANGLES);
-  // glTexCoord2f(0.1, 0.2); glVertex3f(0,0,0);
-  // glTexCoord2f(0.9, 0.2); glVertex3f(1,0, 0);
-  // glTexCoord2f(0.5, 0.1); glVertex3f(0.5,-.7, - 0.3);
-  // glEnd();
-  //
-  // glTranslated(x - 1, y, z);
-  // glBegin(GL_TRIANGLES);
-  // glTexCoord2f(0.1, 0.2); glVertex3f(0,0,0);
-  // glTexCoord2f(0.9, 0.2); glVertex3f(1,0, 0);
-  // glTexCoord2f(0.5, 0.1); glVertex3f(0.5,-.7, - 0.3);
-  // glEnd();
-  //
-  // glTranslated(x - 1, y, z);
-  // glBegin(GL_TRIANGLES);
-  // glTexCoord2f(0.1, 0.2); glVertex3f(0,0,0);
-  // glTexCoord2f(0.9, 0.2); glVertex3f(1,0, 0);
-  // glTexCoord2f(0.5, 0.1); glVertex3f(0.5,-.7, - 0.3);
-  // glEnd();
-  // glPopMatrix();
-  //
-  // // Front Sides
-  //
-  // glPushMatrix();
-  // glTranslated(x + 3, y, z);
-  // glScaled(1, .5, 2);
-  // glBindTexture(GL_TEXTURE_2D,texture[1]);
-  // glBegin(GL_QUADS);
-  // glTexCoord2f(0,1); glVertex3f(-.5, -2, 1.5);
-  // glTexCoord2f(1,1); glVertex3f(0.5, -2, 1.2);
-  // glTexCoord2f(1,0.2); glVertex3f(0.5, -5, 0.9);
-  // glTexCoord2f(0,0.2); glVertex3f(-0.5, -5, 1.2);
-  // glEnd();
-  //
-  // glTranslated(x + 1, y, z - .3);
-  // glBegin(GL_QUADS);
-  // glTexCoord2f(0,1); glVertex3f(-.5, -2, 1.5);
-  // glTexCoord2f(1,1); glVertex3f(0.5, -2, 1.2);
-  // glTexCoord2f(1,0.2); glVertex3f(0.5, -5, 0.9);
-  // glTexCoord2f(0,0.2); glVertex3f(-0.5, -5, 1.2);
-  // glEnd();
-  //
-  // glTranslated(x + 1, y, z - .3);
-  // glBegin(GL_QUADS);
-  // glTexCoord2f(0,1); glVertex3f(-.5, -2, 1.5);
-  // glTexCoord2f(1,1); glVertex3f(0.5, -2, 1.2);
-  // glTexCoord2f(1,0.2); glVertex3f(0.5, -5, 0.9);
-  // glTexCoord2f(0,0.2); glVertex3f(-0.5, -5, 1.2);
-  // glEnd();
-  //
-  //
-  //
-  //
-  //
-  // glPopMatrix();
-  // glDisable(GL_TEXTURE_2D);
-  //
-
-
-  // glTexCoord2f(0,1); glVertex3f(-.5, -2, 1.5);
-  // glTexCoord2f(1,1); glVertex3f(0.5, -2, 1.5);
-  // glTexCoord2f(1,0.2); glVertex3f(0.5, -5, 1.2);
-  // glTexCoord2f(0,0.2); glVertex3f(-0.5, -5, 1.2);
-
-
 
   glPushMatrix();
   glTranslated(x, y, z);
@@ -466,8 +341,8 @@ static void stage(double x, double y, double z)
   glTexCoord2f(1, 1); glVertex3f(-2, 1, -2.2);
 
   // Left Ledge
-  glTexCoord2f(0, 0.2); glVertex3f(-1.9, 0, -1);
-  glTexCoord2f(0, 1); glVertex3f(-2, 1, -1);
+  glTexCoord2f(0, 0.2); glVertex3f(-1.9, 0, -.5);
+  glTexCoord2f(0, 1); glVertex3f(-2, 1, -.5);
 
   // Left Front
   glTexCoord2f(1, 0.2); glVertex3f(-1, 0, 0);
