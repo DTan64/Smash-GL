@@ -462,6 +462,25 @@ static void stage(double x, double y, double z)
   glTexCoord2f(1, 0.2); glVertex3f(0, 0, -2.8);
   glTexCoord2f(1, 1); glVertex3f(0, 1, -3);
 
+  glTexCoord2f(0, 0.2); glVertex3f(-1, 0, -2.8);
+  glTexCoord2f(0, 1); glVertex3f(-1, 1, -3);
+
+  // Left Back
+  glTexCoord2f(1, 0.2); glVertex3f(-2, 0, -2);
+  glTexCoord2f(1, 1); glVertex3f(-2, 1, -2.2);
+
+  // Left Ledge
+
+  glTexCoord2f(0, 0.2); glVertex3f(-1.9, 0, -1);
+  glTexCoord2f(0, 1); glVertex3f(-2, 1, -1);
+
+  glTexCoord2f(1, 0.2); glVertex3f(-1.3, 0, 0);
+  glTexCoord2f(1, 1); glVertex3f(-1.5, 1, 0);
+
+  glTexCoord2f(0,0.2); glVertex3f(0, 0, 0);
+  glTexCoord2f(0,1); glVertex3f(0, 1, .5);
+
+
   glEnd();
   glPopMatrix();
   glDisable(GL_TEXTURE_2D);
