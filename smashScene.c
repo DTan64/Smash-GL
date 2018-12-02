@@ -207,7 +207,7 @@ static void stage(double x, double y, double z)
   int th, ph;
   const int d = 5;
 
-  // // Top
+  // Top
   // glPushMatrix();
   // glTranslated(x, y, z);
   // glScaled(5, 2, 3);
@@ -223,20 +223,20 @@ static void stage(double x, double y, double z)
   // glVertex3f(-1, 0, -.5);
   // glEnd();
   // glPopMatrix();
-  //
-  // glPushMatrix();
-  // glTranslated(x, y, z);
-  // glScaled(5, .5, 2);
-  // glEnable(GL_TEXTURE_2D);
-  // glBindTexture(GL_TEXTURE_2D,texture[0]);
-  // glBegin(GL_QUADS);
-  //
-  // // Front
-  // glTexCoord2d(0,1); glVertex3f(-.5, 0, 1.5);
-  // glTexCoord2d(1,1); glVertex3f(0, 0, 1.5);
-  // glTexCoord2d(1,0); glVertex3f(0, -2, 1.5);
-  // glTexCoord2d(0,0); glVertex3f(-0.5, -2, 1.5);
-  //
+
+  glPushMatrix();
+  glTranslated(x, y + 3, z);
+  glScaled(2, 2, 2);
+  glEnable(GL_TEXTURE_2D);
+  glBindTexture(GL_TEXTURE_2D,texture[0]);
+  glBegin(GL_QUADS);
+
+  // Front
+  glTexCoord2d(0,1); glVertex3f(-1, 0, .5);
+  glTexCoord2d(1,1); glVertex3f(2, 0, .5);
+  glTexCoord2d(1,0); glVertex3f(2, -.5, .5);
+  glTexCoord2d(0,0); glVertex3f(-1, -.5, .5);
+
   // glTexCoord2d(0,1); glVertex3f(0, 0, 1.5);
   // glTexCoord2d(1,1); glVertex3f(0.5, 0, 1.5);
   // glTexCoord2d(1,0); glVertex3f(0.5, -2, 1.5);
@@ -285,9 +285,9 @@ static void stage(double x, double y, double z)
   // glTexCoord2d(1,1); glVertex3f(-0.5, 0, -1.5);
   // glTexCoord2d(1,0); glVertex3f(-0.5, -2, -1.5);
   // glTexCoord2d(0,0); glVertex3f(-1, -2, -.75);
-  //
-  // glEnd();
-  // glPopMatrix();
+
+  glEnd();
+  glPopMatrix();
   //
   // // Botoom Part of stage: Front
   // glPushMatrix();
@@ -420,7 +420,6 @@ static void stage(double x, double y, double z)
   glPushMatrix();
   glTranslated(x, y, z);
   glScaled(2, 2, 2);
-  glEnable(GL_TEXTURE_2D);
   glBindTexture(GL_TEXTURE_2D,texture[1]);
   glBegin(GL_QUAD_STRIP);
   glColor3f(0.96,.81,.6); // rbg divided by 255
@@ -452,9 +451,6 @@ static void stage(double x, double y, double z)
   glTexCoord2f(1, 0.2); glVertex3f(2, 0, -2.8);
   glTexCoord2f(1, 1); glVertex3f(2, 1, -3);
 
-  // glTexCoord2f(0, 0.2); glVertex3f(2, 0, -2.5);
-  // glTexCoord2f(0,1); glVertex3f(2, 1, -3);
-  //
   // Back
   glTexCoord2f(0, 0.2); glVertex3f(1, 0, -2.8);
   glTexCoord2f(0, 1); glVertex3f(1, 1, -3);
@@ -470,16 +466,16 @@ static void stage(double x, double y, double z)
   glTexCoord2f(1, 1); glVertex3f(-2, 1, -2.2);
 
   // Left Ledge
-
   glTexCoord2f(0, 0.2); glVertex3f(-1.9, 0, -1);
   glTexCoord2f(0, 1); glVertex3f(-2, 1, -1);
 
-  glTexCoord2f(1, 0.2); glVertex3f(-1.3, 0, 0);
-  glTexCoord2f(1, 1); glVertex3f(-1.5, 1, 0);
+  // Left Front
+  glTexCoord2f(1, 0.2); glVertex3f(-1, 0, 0);
+  glTexCoord2f(1, 1); glVertex3f(-1, 1, .5);
 
+  // Completion
   glTexCoord2f(0,0.2); glVertex3f(0, 0, 0);
   glTexCoord2f(0,1); glVertex3f(0, 1, .5);
-
 
   glEnd();
   glPopMatrix();
