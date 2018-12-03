@@ -846,6 +846,18 @@ static void kirby(double x, double y, double z, double r)
 
 }
 
+static void pika(double x, double y, double z)
+{
+
+  glPushMatrix();
+  glTranslated(x - 3, y + 10, z -4);
+  glRotatef(90, 0 ,1, 0);
+  glScaled(7,7,7);
+  glCallList(pikaObj);
+  glPopMatrix();
+
+}
+
 /*
  *  OpenGL (GLUT) calls this routine to display the scene
  */
@@ -867,9 +879,8 @@ void display()
    Sky(2*dim);
 
    float Position[]  = {distance*Cos(zh),ylight,distance*Sin(zh),1.0};
-
-   //kirby(0,0,0, 1);
    kirby(Position[0],Position[1],Position[2] , 0.1);
+   pika(0,0,0);
 
    glPushMatrix();
    glTranslated(-3.4,10, -4);
@@ -1052,6 +1063,7 @@ int main(int argc,char* argv[])
 
    // Objects
    kirbyObj = LoadOBJ("kirby.obj");
+   pikaObj = LoadOBJ("pika.obj");
 
    //  Pass control to GLUT so it can interact with the user
    ErrCheck("init");

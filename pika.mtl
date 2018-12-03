@@ -1,0 +1,366 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 18.11.2016 16:15:06
+
+newmtl Material__790
+Ns 10.0000
+Ni 1.5000
+d 1.0000
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000 
+illum 2
+Ka 0.5880 0.5880 0.5880
+Kd 0.5880 0.5880 0.5880
+Ks 0.0000 0.0000 0.0000
+Ke 0.0000 0.0000 0.0000
+map_Ka 7E0A29E6_c.bmp
+map_Kd 7E0A29E6_c.bmp
+
+newmtl Material__789
+Ns 10.0000
+Ni 1.5000
+d 1.0000
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000 
+illum 2
+Ka 0.5880 0.5880 0.5880
+Kd 0.5880 0.5880 0.5880
+Ks 0.0000 0.0000 0.0000
+Ke 0.0000 0.0000 0.0000
+map_Ka 7E0A29E6_c.bmp
+map_Kd 7E0A29E6_c.bmp
+
+newmtl Material__788
+Ns 10.0000
+Ni 1.5000
+d 1.0000
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000 
+illum 2
+Ka 0.5880 0.5880 0.5880
+Kd 0.5880 0.5880 0.5880
+Ks 0.0000 0.0000 0.0000
+Ke 0.0000 0.0000 0.0000
+map_Ka 7E0A29E6_c.bmp
+map_Kd 7E0A29E6_c.bmp
+
+newmtl Material__804
+Ns 10.0000
+Ni 1.5000
+d 1.0000
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000 
+illum 2
+Ka 0.5880 0.5880 0.5880
+Kd 0.5880 0.5880 0.5880
+Ks 0.0000 0.0000 0.0000
+Ke 0.0000 0.0000 0.0000
+map_Ka yellow.bmp
+map_Kd yellow.bmp
+
+newmtl Material__802
+Ns 10.0000
+Ni 1.5000
+d 1.0000
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000 
+illum 2
+Ka 0.5880 0.5880 0.5880
+Kd 0.5880 0.5880 0.5880
+Ks 0.0000 0.0000 0.0000
+Ke 0.0000 0.0000 0.0000
+map_Ka yellow.bmp
+map_Kd yellow.bmp
+
+newmtl Material__799
+Ns 10.0000
+Ni 1.5000
+d 1.0000
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000 
+illum 2
+Ka 0.5880 0.5880 0.5880
+Kd 0.5880 0.5880 0.5880
+Ks 0.0000 0.0000 0.0000
+Ke 0.0000 0.0000 0.0000
+map_Ka yellow.bmp
+map_Kd yellow.bmp
+
+newmtl Material__803
+Ns 10.0000
+Ni 1.5000
+d 1.0000
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000 
+illum 2
+Ka 0.5880 0.5880 0.5880
+Kd 0.5880 0.5880 0.5880
+Ks 0.0000 0.0000 0.0000
+Ke 0.0000 0.0000 0.0000
+map_Ka yellow.bmp
+map_Kd yellow.bmp
+
+newmtl Material__801
+Ns 10.0000
+Ni 1.5000
+d 1.0000
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000 
+illum 2
+Ka 0.5880 0.5880 0.5880
+Kd 0.5880 0.5880 0.5880
+Ks 0.0000 0.0000 0.0000
+Ke 0.0000 0.0000 0.0000
+map_Ka yellow.bmp
+map_Kd yellow.bmp
+
+newmtl Material__800
+Ns 10.0000
+Ni 1.5000
+d 1.0000
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000 
+illum 2
+Ka 0.5880 0.5880 0.5880
+Kd 0.5880 0.5880 0.5880
+Ks 0.0000 0.0000 0.0000
+Ke 0.0000 0.0000 0.0000
+map_Ka yellow.bmp
+map_Kd yellow.bmp
+
+newmtl Material__806
+Ns 10.0000
+Ni 1.5000
+d 1.0000
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000 
+illum 2
+Ka 0.5880 0.5880 0.5880
+Kd 0.5880 0.5880 0.5880
+Ks 0.0000 0.0000 0.0000
+Ke 0.0000 0.0000 0.0000
+map_Ka yellow.bmp
+map_Kd yellow.bmp
+
+newmtl Material__805
+Ns 10.0000
+Ni 1.5000
+d 1.0000
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000 
+illum 2
+Ka 0.5880 0.5880 0.5880
+Kd 0.5880 0.5880 0.5880
+Ks 0.0000 0.0000 0.0000
+Ke 0.0000 0.0000 0.0000
+map_Ka yellow.bmp
+map_Kd yellow.bmp
+
+newmtl Material__796
+Ns 10.0000
+Ni 1.5000
+d 1.0000
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000 
+illum 2
+Ka 0.5880 0.5880 0.5880
+Kd 0.5880 0.5880 0.5880
+Ks 0.0000 0.0000 0.0000
+Ke 0.0000 0.0000 0.0000
+map_Ka 134F007_c.bmp
+map_Kd 134F007_c.bmp
+
+newmtl Material__795
+Ns 10.0000
+Ni 1.5000
+d 1.0000
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000 
+illum 2
+Ka 0.5880 0.5880 0.5880
+Kd 0.5880 0.5880 0.5880
+Ks 0.0000 0.0000 0.0000
+Ke 0.0000 0.0000 0.0000
+map_Ka 134F007_c.bmp
+map_Kd 134F007_c.bmp
+
+newmtl Material__816
+Ns 10.0000
+Ni 1.5000
+d 1.0000
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000 
+illum 2
+Ka 0.5880 0.5880 0.5880
+Kd 0.5880 0.5880 0.5880
+Ks 0.0000 0.0000 0.0000
+Ke 0.0000 0.0000 0.0000
+map_Ka hat.bmp
+map_Kd hat.bmp
+
+newmtl Material__815
+Ns 10.0000
+Ni 1.5000
+d 1.0000
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000 
+illum 2
+Ka 0.5880 0.5880 0.5880
+Kd 0.5880 0.5880 0.5880
+Ks 0.0000 0.0000 0.0000
+Ke 0.0000 0.0000 0.0000
+map_Ka 3943B2A5_c.bmp
+map_Kd 3943B2A5_c.bmp
+
+newmtl Material__792
+Ns 10.0000
+Ni 1.5000
+d 1.0000
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000 
+illum 2
+Ka 0.5880 0.5880 0.5880
+Kd 0.5880 0.5880 0.5880
+Ks 0.0000 0.0000 0.0000
+Ke 0.0000 0.0000 0.0000
+map_Ka 50E7A230_c.bmp
+map_Kd 50E7A230_c.bmp
+
+newmtl Material__798
+Ns 10.0000
+Ni 1.5000
+d 1.0000
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000 
+illum 2
+Ka 0.5880 0.5880 0.5880
+Kd 0.5880 0.5880 0.5880
+Ks 0.0000 0.0000 0.0000
+Ke 0.0000 0.0000 0.0000
+map_Ka yellow.bmp
+map_Kd yellow.bmp
+
+newmtl Material__808
+Ns 10.0000
+Ni 1.5000
+d 1.0000
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000 
+illum 2
+Ka 0.5880 0.5880 0.5880
+Kd 0.5880 0.5880 0.5880
+Ks 0.0000 0.0000 0.0000
+Ke 0.0000 0.0000 0.0000
+map_Ka yellow.bmp
+map_Kd yellow.bmp
+
+newmtl Material__807
+Ns 10.0000
+Ni 1.5000
+d 1.0000
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000 
+illum 2
+Ka 0.5880 0.5880 0.5880
+Kd 0.5880 0.5880 0.5880
+Ks 0.0000 0.0000 0.0000
+Ke 0.0000 0.0000 0.0000
+map_Ka yellow.bmp
+map_Kd yellow.bmp
+
+newmtl Material__809
+Ns 10.0000
+Ni 1.5000
+d 1.0000
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000 
+illum 2
+Ka 0.5880 0.5880 0.5880
+Kd 0.5880 0.5880 0.5880
+Ks 0.0000 0.0000 0.0000
+Ke 0.0000 0.0000 0.0000
+map_Ka yellow.bmp
+map_Kd yellow.bmp
+
+newmtl Material__811
+Ns 10.0000
+Ni 1.5000
+d 1.0000
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000 
+illum 2
+Ka 0.5880 0.5880 0.5880
+Kd 0.5880 0.5880 0.5880
+Ks 0.0000 0.0000 0.0000
+Ke 0.0000 0.0000 0.0000
+map_Ka yellow.bmp
+map_Kd yellow.bmp
+
+newmtl Material__810
+Ns 10.0000
+Ni 1.5000
+d 1.0000
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000 
+illum 2
+Ka 0.5880 0.5880 0.5880
+Kd 0.5880 0.5880 0.5880
+Ks 0.0000 0.0000 0.0000
+Ke 0.0000 0.0000 0.0000
+map_Ka yellow.bmp
+map_Kd yellow.bmp
+
+newmtl Material__814
+Ns 10.0000
+Ni 1.5000
+d 1.0000
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000 
+illum 2
+Ka 0.5880 0.5880 0.5880
+Kd 0.5880 0.5880 0.5880
+Ks 0.0000 0.0000 0.0000
+Ke 0.0000 0.0000 0.0000
+map_Ka yellow.bmp
+map_Kd yellow.bmp
+
+newmtl Material__780
+Ns 10.0000
+Ni 1.5000
+d 1.0000
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000 
+illum 2
+Ka 0.5880 0.5880 0.5880
+Kd 0.5880 0.5880 0.5880
+Ks 0.0000 0.0000 0.0000
+Ke 0.0000 0.0000 0.0000
+map_Ka 5E589416_c.bmp
+map_Kd 5E589416_c.bmp
+
+newmtl Material__817
+Ns 10.0000
+Ni 1.5000
+d 1.0000
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000 
+illum 2
+Ka 0.5880 0.5880 0.5880
+Kd 0.5880 0.5880 0.5880
+Ks 0.0000 0.0000 0.0000
+Ke 0.0000 0.0000 0.0000
+map_Ka yellow.bmp
+map_Kd yellow.bmp
+
+newmtl Material__774
+Ns 10.0000
+Ni 1.5000
+d 1.0000
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000 
+illum 2
+Ka 0.5880 0.5880 0.5880
+Kd 0.5880 0.5880 0.5880
+Ks 0.0000 0.0000 0.0000
+Ke 0.0000 0.0000 0.0000
+map_Ka 4E4DF27D_c.bmp
+map_Kd 4E4DF27D_c.bmp
