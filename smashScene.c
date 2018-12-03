@@ -47,6 +47,7 @@ double epy = 0.0;
 double epz = 5.0;
 
 unsigned int texture[7]; // Texture names
+int sky[2];   //  Sky textures
 
 
 /*
@@ -740,12 +741,57 @@ static void whispy(double x, double y, double z)
   glEnd();
   glPopMatrix();
 
-
-
-
-
-
 }
+
+
+static void Sky(double D)
+{
+   glColor3f(1,1,1);
+   glEnable(GL_TEXTURE_2D);
+
+   //  Sides
+   glBindTexture(GL_TEXTURE_2D,sky[0]);
+   glBegin(GL_QUADS);
+   glTexCoord2f(0,0); glVertex3f(-D,-D,-D);
+   glTexCoord2f(1,0); glVertex3f(+D,-D,-D);
+   glTexCoord2f(1,1); glVertex3f(+D,+D,-D);
+   glTexCoord2f(0,1); glVertex3f(-D,+D,-D);
+
+   glTexCoord2f(0,.7); glVertex3f(+D,-D,-D);
+   glTexCoord2f(0.3,.7); glVertex3f(+D,-D,+D);
+   glTexCoord2f(0.3,1); glVertex3f(+D,+D,+D);
+   glTexCoord2f(0,1); glVertex3f(+D,+D,-D);
+
+   glTexCoord2f(0,0.7); glVertex3f(+D,-D,+D);
+   glTexCoord2f(0.3,0.7); glVertex3f(-D,-D,+D);
+   glTexCoord2f(0.3,1); glVertex3f(-D,+D,+D);
+   glTexCoord2f(0,1); glVertex3f(+D,+D,+D);
+
+   glTexCoord2f(0,0.7); glVertex3f(-D,-D,+D);
+   glTexCoord2f(0.3,0.7); glVertex3f(-D,-D,-D);
+   glTexCoord2f(0.3,1); glVertex3f(-D,+D,-D);
+   glTexCoord2f(0,1); glVertex3f(-D,+D,+D);
+   glEnd();
+
+   //  Top and bottom
+   //glBindTexture(GL_TEXTURE_2D,sky[1]);
+   glBegin(GL_QUADS);
+   glTexCoord2f(0,0.7); glVertex3f(+D,+D,-D);
+   glTexCoord2f(0.3,0.7); glVertex3f(+D,+D,+D);
+   glTexCoord2f(0.3,1); glVertex3f(-D,+D,+D);
+   glTexCoord2f(0,1); glVertex3f(-D,+D,-D);
+
+   glTexCoord2f(0,0.7); glVertex3f(-D,-D,+D);
+   glTexCoord2f(0.3,0.7); glVertex3f(+D,-D,+D);
+   glTexCoord2f(0.3,1); glVertex3f(+D,-D,-D);
+   glTexCoord2f(0,1); glVertex3f(-D,-D,-D);
+   glEnd();
+
+   glDisable(GL_TEXTURE_2D);
+}
+
+
+
 
 void update()
 {
@@ -766,19 +812,15 @@ void display()
    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
    //  Enable Z-buffering in OpenGL
    glEnable(GL_DEPTH_TEST);
+   //glEnable(GL_CULL_FACE);
    //  Undo previous transformations
    glLoadIdentity();
    //  Perspective - set eye position
-   if (mode) {
-        double Ex = -2*dim*Sin(th)*Cos(ph);
-        double Ey = +2*dim        *Sin(ph);
-        double Ez = +2*dim*Cos(th)*Cos(ph);
-        gluLookAt(Ex,Ey,Ez , 0,0,0 , 0,Cos(ph),0);
-   }
-   else {
-        glRotatef(ph,1,0,0);
-        glRotatef(th,0,1,0);
-   }
+   double Ex = -2*dim*Sin(th)*Cos(ph);
+   double Ey = +2*dim        *Sin(ph);
+   double Ez = +2*dim*Cos(th)*Cos(ph);
+   gluLookAt(Ex,Ey,Ez , 0,0,0 , 0,Cos(ph),0);
+   Sky(2*dim);
 
    glPushMatrix();
    glTranslated(-1.7,5, -2);
@@ -812,9 +854,6 @@ void display()
    glScaled(0.5, .7, .5);
    whispy(0, 0, 0);
    glPopMatrix();
-
-
-
 
    //  White
    glColor3f(1,1,1);
@@ -871,7 +910,7 @@ void special(int key,int x,int y)
    ph %= 360;
 
   }
-   ProjectView();
+   Project(fov, asp, dim);
    //  Tell GLUT it is necessary to redisplay the scene
    glutPostRedisplay();
 }
@@ -907,7 +946,7 @@ void keyboard(unsigned char key,int x,int y)
      dim += 1;
    }
 
-   ProjectView();
+   Project(fov, asp, dim);
    glutPostRedisplay();
 }
 
@@ -921,7 +960,7 @@ void reshape(int width,int height)
    asp = (height>0) ? (double)width/height : 1;
    //  Set the viewport to the entire window
    glViewport(0,0, width,height);
-   ProjectView();
+   Project(fov, asp, dim);
 }
 
 /*
@@ -952,6 +991,8 @@ int main(int argc,char* argv[])
    texture[4] = LoadTexBMP("grass_top.bmp");
    texture[5] = LoadTexBMP("grass_way.bmp");
    texture[6] = LoadTexBMP("whispy.bmp");
+
+   sky[0] = LoadTexBMP("background.bmp");
    //  Pass control to GLUT so it can interact with the user
    ErrCheck("init");
    glutMainLoop();
