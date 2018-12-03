@@ -46,7 +46,7 @@ double epx = 0.0;
 double epy = 0.0;
 double epz = 5.0;
 
-unsigned int texture[6]; // Texture names
+unsigned int texture[7]; // Texture names
 
 
 /*
@@ -586,6 +586,167 @@ static void stage(double x, double y, double z)
 
 }
 
+static void whispy(double x, double y, double z)
+{
+
+  int th, ph;
+  const int d = 5;
+  float pi = 3.141592654f;
+  float numberOfSegments = 64;
+  float angleIncrement = (2.0f * pi) / numberOfSegments;
+  float textureCoordinateIncrement = 1.0 / numberOfSegments;
+
+  // Trunk
+  glPushMatrix();
+  glTranslated(x, y, z);
+  glScaled(2, 10, 2);
+  glEnable(GL_TEXTURE_2D);
+  glBindTexture(GL_TEXTURE_2D,texture[6]);
+  glBegin(GL_QUAD_STRIP);
+  for (unsigned int i = 0; i <= numberOfSegments; ++i)
+  {
+      float c = cos(angleIncrement * i);
+      float s = sin(angleIncrement * i);
+      glTexCoord2f( textureCoordinateIncrement * i, 0); glVertex3f( c, 0, s);
+      glTexCoord2f( textureCoordinateIncrement * i, 1.0f); glVertex3f( c, .5, s);
+  }
+  glEnd();
+  glPopMatrix();
+
+
+  glPushMatrix();
+  glTranslated(x + 1.5, y, z);
+  glRotatef(90, 0, 0,1);
+  glScaled(0.5,.5,.5);
+  glBegin(GL_TRIANGLES);
+  for (th = 0; th <= 360; th += 2 * d) {
+    glNormal3d(Cos(th-d), 1, Sin(th-d));
+    glTexCoord2d((th-d)/360.0, 0);
+    glVertex3d(Cos(th-d), 0, Sin(th-d));
+    glNormal3d(Cos(th), 1, Sin(th));
+    glTexCoord2d(th/360.0, 1);
+    glVertex3d(0, -5, 0);
+    glNormal3d(Cos(th+d), 1, Sin(th+d));
+    glTexCoord2d((th+d)/360.0, 0);
+    glVertex3d(Cos(th+d), 0, Sin(th+d));
+  }
+  glEnd();
+  glPopMatrix();
+
+  glPushMatrix();
+  glTranslated(x + .5,y, z+ 1);
+  glRotatef(90, 0, 0,1);
+  glRotatef(-50, 1, 0, 0);
+  glScaled(0.5,.5,.5);
+  glBegin(GL_TRIANGLES);
+  for (th = 0; th <= 360; th += 2 * d) {
+    glNormal3d(Cos(th-d), 1, Sin(th-d));
+    glTexCoord2d((th-d)/360.0, 0);
+    glVertex3d(Cos(th-d), 0, Sin(th-d));
+    glNormal3d(Cos(th), 1, Sin(th));
+    glTexCoord2d(th/360.0, 1);
+    glVertex3d(0, -5, 0);
+    glNormal3d(Cos(th+d), 1, Sin(th+d));
+    glTexCoord2d((th+d)/360.0, 0);
+    glVertex3d(Cos(th+d), 0, Sin(th+d));
+  }
+  glEnd();
+  glPopMatrix();
+
+  glPushMatrix();
+  glTranslated(x - 1.5,y, z - .5);
+  glRotatef(90, 0, 0,1);
+  glRotatef(-50, 1, 0, 0);
+  glRotatef(-150, 1, 0, 0);
+  glScaled(0.5,.5,.5);
+  glBegin(GL_TRIANGLES);
+  for (th = 0; th <= 360; th += 2 * d) {
+    glNormal3d(Cos(th-d), 1, Sin(th-d));
+    glTexCoord2d((th-d)/360.0, 0);
+    glVertex3d(Cos(th-d), 0, Sin(th-d));
+    glNormal3d(Cos(th), 1, Sin(th));
+    glTexCoord2d(th/360.0, 1);
+    glVertex3d(0, -5, 0);
+    glNormal3d(Cos(th+d), 1, Sin(th+d));
+    glTexCoord2d((th+d)/360.0, 0);
+    glVertex3d(Cos(th+d), 0, Sin(th+d));
+  }
+  glEnd();
+  glPopMatrix();
+
+
+  // Nose
+  glPushMatrix();
+  glTranslated(x + .8,y + 2.5, z + 1.1);
+  glRotatef(90, 0, 0,1);
+  glRotatef(-50, 1, 0, 0);
+  glScaled(0.5, .3 , .5);
+  glBegin(GL_TRIANGLES);
+  for (th = 0; th <= 360; th += 2 * d) {
+    glNormal3d(Cos(th-d), 1, Sin(th-d));
+    glTexCoord2d((th-d)/360.0, 0);
+    glVertex3d(Cos(th-d), 0, Sin(th-d));
+    glNormal3d(Cos(th), 1, Sin(th));
+    glTexCoord2d(th/360.0, 1);
+    glVertex3d(0, -5, 0);
+    glNormal3d(Cos(th+d), 1, Sin(th+d));
+    glTexCoord2d((th+d)/360.0, 0);
+    glVertex3d(Cos(th+d), 0, Sin(th+d));
+  }
+  glEnd();
+  glPopMatrix();
+  glDisable(GL_TEXTURE_2D);
+
+  // Eye
+  glPushMatrix();
+  glTranslated(x + .5,y + 3.5,z + 2);
+  glRotatef(90, 1,0,0);
+  glRotatef(-10, 0,0,1);
+  glScaled(0.5, 2, 2);
+  glColor3f(0,0,0);
+  glVertex3f(0,0,0);
+  glBegin(GL_TRIANGLE_FAN);
+  for(th = 0; th <= 360; th+= d) {
+    glTexCoord2d(0.5, 1); glVertex3f(Cos(th), 0, Sin(th)*0.4);
+  }
+  glEnd();
+  glPopMatrix();
+
+  glPushMatrix();
+  glTranslated(x + 1.8,y + 3.5,z + 1);
+  glRotatef(90, 1,0,0);
+  glRotatef(-50, 0,0,1);
+  glScaled(0.5, 2, 2);
+  glColor3f(0,0,0);
+  glVertex3f(0,0,0);
+  glBegin(GL_TRIANGLE_FAN);
+  for(th = 0; th <= 360; th+= d) {
+    glTexCoord2d(0.5, 1); glVertex3f(Cos(th), 0, Sin(th)*0.4);
+  }
+  glEnd();
+  glPopMatrix();
+
+  glPushMatrix();
+  glTranslated(x + 1.3,y + 1.5, z + 1.6);
+  glRotatef(90, 1,0,0);
+  glRotatef(-50, 0,0,1);
+  glScaled(0.3, 2, 2);
+  glColor3f(0,0,0);
+  glVertex3f(0,0,0);
+  glBegin(GL_TRIANGLE_FAN);
+  for(th = 0; th <= 360; th+= d) {
+    glTexCoord2d(0.5, 1); glVertex3f(Cos(th), 0, Sin(th)*0.2);
+  }
+  glEnd();
+  glPopMatrix();
+
+
+
+
+
+
+}
+
 void update()
 {
    //  Elapsed time in seconds
@@ -621,7 +782,9 @@ void display()
 
 
    //platform(0, 0, 0);
-   stage(0,0,0);
+   whispy(0, 0, 0);
+   //stage(0,0,0);
+
 
 
 
@@ -760,6 +923,7 @@ int main(int argc,char* argv[])
    texture[3] = LoadTexBMP("platform_bottom.bmp");
    texture[4] = LoadTexBMP("grass_top.bmp");
    texture[5] = LoadTexBMP("grass_way.bmp");
+   texture[6] = LoadTexBMP("whispy.bmp");
    //  Pass control to GLUT so it can interact with the user
    ErrCheck("init");
    glutMainLoop();
