@@ -780,10 +780,38 @@ void display()
         glRotatef(th,0,1,0);
    }
 
+   glPushMatrix();
+   glTranslated(-1.7,5, -2);
+   glRotatef(90, 0,0,1);
+   glRotatef(270, 0,1,0);
+   glScaled(0.7, 0.7, 0.7);
+   platform(0, 0, 0);
+   glPopMatrix();
 
-   //platform(0, 0, 0);
+   glPushMatrix();
+   glTranslated(+3.5,5, -2);
+   glRotatef(90, 0,0,1);
+   glRotatef(270, 0,1,0);
+   glScaled(0.7, 0.7, 0.7);
+   platform(0, 0, 0);
+   glPopMatrix();
+
+   glPushMatrix();
+   glTranslated(+.8,7, -2);
+   glRotatef(90, 0,0,1);
+   glRotatef(270, 0,1,0);
+   glScaled(0.7, 0.7, 0.7);
+   platform(0, 0, 0);
+   glPopMatrix();
+
+   stage(0,0,0);
+
+
+   glPushMatrix();
+   glTranslated(0,3, -4.5);
+   glScaled(0.5, .7, .5);
    whispy(0, 0, 0);
-   //stage(0,0,0);
+   glPopMatrix();
 
 
 
