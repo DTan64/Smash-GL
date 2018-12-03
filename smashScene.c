@@ -30,14 +30,18 @@
 
 int th=0;         //  Azimuth of view angle
 int ph=0;         //  Elevation of view angle
-int zh = 0;
+int zh = 90;
 int axes=1;       //  Display axes
 int mode=1;       //  Projection type
-double dim=7;     // Size of scene
+double dim=15;     // Size of scene
 double asp=1;     // Aspect ratio
 int fov = 55;     // Field of view
 int fp = 0;
+int kirbyObj = 0;
+int pikaObj = 0;
+int distance = 20;
 double rotation = 0.0;
+float ylight  =   0;  // Elevation of light
 
 // TODO: Implement first person view
 double fpx = 0.0;
@@ -46,7 +50,7 @@ double epx = 0.0;
 double epy = 0.0;
 double epz = 5.0;
 
-unsigned int texture[7]; // Texture names
+unsigned int texture[8]; // Texture names
 int sky[2];   //  Sky textures
 
 
@@ -67,39 +71,6 @@ void Print(const char* format , ...)
    //  Display the characters one at a time at the current raster position
    while (*ch)
       glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,*ch++);
-}
-
-static void ProjectView()
-{
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-
-  if(mode) {
-    gluPerspective(fov, asp, dim / 4, 4 * dim);
-  }
-  else {
-  glOrtho(-asp*dim,+asp*dim, -dim,+dim, -dim,+dim);
-  }
-  //  Switch to manipulating the model matrix
-  glMatrixMode(GL_MODELVIEW);
-  //  Undo previous transformations
-  glLoadIdentity();
-
-}
-
-/*
- *  Draw vertex in polar coordinates with normal
- */
-static void Vertex(double th,double ph)
-{
-   double x = Sin(th)*Cos(ph);
-   double y = Cos(th)*Cos(ph);
-   double z =         Sin(ph);
-   //  For a sphere at the origin, the position
-   //  and normal vectors are the same
-   glNormal3d(x,y,z);
-   glTexCoord2d(th/360.0,ph/180.0+0.5);
-   glVertex3d(x,y,z);
 }
 
 static void platform(double x, double y, double z)
@@ -696,7 +667,70 @@ static void whispy(double x, double y, double z)
   }
   glEnd();
   glPopMatrix();
+
+  // // Cube leaves
+  // glPushMatrix();
+  // glTranslated(x, y + 4, z);
+  // glScaled(2,2,2);
+  //
+  // // Front
+  // glColor3f(0.4, 0.84, 0.44);
+  // glBindTexture(GL_TEXTURE_2D,texture[7]);
+  // glBegin(GL_QUADS);
+  // glTexCoord2f(0,0); glVertex3f(-1,-1, 1);
+  // glTexCoord2f(1,0); glVertex3f(+1,-1, 1);
+  // glTexCoord2f(1,1); glVertex3f(+1,+1, 1);
+  // glTexCoord2f(0,1); glVertex3f(-1,+1, 1);
+  // glEnd();
+  //
+  // // Back
+  // glBegin(GL_QUADS);
+  // glTexCoord2f(0,0); glVertex3f(+1,-1,-1);
+  // glTexCoord2f(1,0); glVertex3f(-1,-1,-1);
+  // glTexCoord2f(1,1); glVertex3f(-1,+1,-1);
+  // glTexCoord2f(0,1); glVertex3f(+1,+1,-1);
+  // glEnd();
+  //
+  // // Right
+  // glBegin(GL_QUADS);
+  // glTexCoord2f(0,0); glVertex3f(+1,-1,+1);
+  // glTexCoord2f(1,0); glVertex3f(+1,-1,-1);
+  // glTexCoord2f(1,1); glVertex3f(+1,+1,-1);
+  // glTexCoord2f(0,1); glVertex3f(+1,+1,+1);
+  // glEnd();
+  //
+  // // Left
+  // glBegin(GL_QUADS);
+  // glTexCoord2f(0,0); glVertex3f(-1,-1,-1);
+  // glTexCoord2f(1,0); glVertex3f(-1,-1,+1);
+  // glTexCoord2f(1,1); glVertex3f(-1,+1,+1);
+  // glTexCoord2f(0,1); glVertex3f(-1,+1,-1);
+  // glEnd();
+  //
+  // // Top
+  // glBegin(GL_QUADS);
+  // glTexCoord2f(0,0); glVertex3f(-1,+1,+1);
+  // glTexCoord2f(1,0); glVertex3f(+1,+1,+1);
+  // glTexCoord2f(1,1); glVertex3f(+1,+1,-1);
+  // glTexCoord2f(0,1); glVertex3f(-1,+1,-1);
+  // glEnd();
+  //
+  // // Bottom
+  // glBegin(GL_QUADS);
+  // glTexCoord2f(0,0); glVertex3f(-1,-1,-1);
+  // glTexCoord2f(1,0); glVertex3f(+1,-1,-1);
+  // glTexCoord2f(1,1); glVertex3f(+1,-1,+1);
+  // glTexCoord2f(0,1); glVertex3f(-1,-1,+1);
+  //
+  //
+  // glEnd();
+  // glPopMatrix();
+
+
+
+
   glDisable(GL_TEXTURE_2D);
+
 
   // Eye
   glPushMatrix();
@@ -790,9 +824,6 @@ static void Sky(double D)
    glDisable(GL_TEXTURE_2D);
 }
 
-
-
-
 void update()
 {
    //  Elapsed time in seconds
@@ -800,6 +831,19 @@ void update()
    zh = fmod(90*t,360.0);
    //  Tell GLUT it is necessary to redisplay the scene
    glutPostRedisplay();
+}
+
+
+static void kirby(double x, double y, double z, double r)
+{
+
+  glPushMatrix();
+  glTranslated(x + 2, y + 6, z - 2);
+  glRotatef(-zh, 0, 1, 0);
+  glScaled(7,7,7);
+  glCallList(kirbyObj);
+  glPopMatrix();
+
 }
 
 /*
@@ -822,38 +866,50 @@ void display()
    gluLookAt(Ex,Ey,Ez , 0,0,0 , 0,Cos(ph),0);
    Sky(2*dim);
 
+   float Position[]  = {distance*Cos(zh),ylight,distance*Sin(zh),1.0};
+
+   //kirby(0,0,0, 1);
+   kirby(Position[0],Position[1],Position[2] , 0.1);
+
    glPushMatrix();
-   glTranslated(-1.7,5, -2);
+   glTranslated(-3.4,10, -4);
    glRotatef(90, 0,0,1);
    glRotatef(270, 0,1,0);
-   glScaled(0.7, 0.7, 0.7);
+   glScaled(1.5, 1.5, 1.5);
    platform(0, 0, 0);
    glPopMatrix();
 
    glPushMatrix();
-   glTranslated(+3.5,5, -2);
+   glTranslated(+7,10, -4);
    glRotatef(90, 0,0,1);
    glRotatef(270, 0,1,0);
-   glScaled(0.7, 0.7, 0.7);
+   glScaled(1.5, 1.5, 1.5);
    platform(0, 0, 0);
    glPopMatrix();
 
    glPushMatrix();
-   glTranslated(+.8,7, -2);
+   glTranslated(1.6, 14, -4);
    glRotatef(90, 0,0,1);
    glRotatef(270, 0,1,0);
-   glScaled(0.7, 0.7, 0.7);
+   glScaled(1.5, 1.5, 1.5);
    platform(0, 0, 0);
    glPopMatrix();
 
+   glPushMatrix();
+   glScaled(2,2,2);
    stage(0,0,0);
+   glPopMatrix();
 
 
    glPushMatrix();
-   glTranslated(0,3, -4.5);
-   glScaled(0.5, .7, .5);
+   glTranslated(0, 6, -9);
+   glScaled(1, 1.4, 1);
    whispy(0, 0, 0);
    glPopMatrix();
+
+
+
+
 
    //  White
    glColor3f(1,1,1);
@@ -983,7 +1039,7 @@ int main(int argc,char* argv[])
    glutSpecialFunc(special);
    //  Tell GLUT to call "key" when a key is pressed
    glutKeyboardFunc(keyboard);
-   //glutIdleFunc(update);
+   glutIdleFunc(update);
    texture[0] = LoadTexBMP("grass_side.bmp");
    texture[1] = LoadTexBMP("dirt_bottom.bmp");
    texture[2] = LoadTexBMP("platform_top.bmp");
@@ -991,8 +1047,12 @@ int main(int argc,char* argv[])
    texture[4] = LoadTexBMP("grass_top.bmp");
    texture[5] = LoadTexBMP("grass_way.bmp");
    texture[6] = LoadTexBMP("whispy.bmp");
-
+   texture[7] = LoadTexBMP("leaves.bmp");
    sky[0] = LoadTexBMP("background.bmp");
+
+   // Objects
+   kirbyObj = LoadOBJ("kirby.obj");
+
    //  Pass control to GLUT so it can interact with the user
    ErrCheck("init");
    glutMainLoop();
