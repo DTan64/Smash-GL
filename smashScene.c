@@ -31,7 +31,7 @@
 int th=0;         //  Azimuth of view angle
 int ph=25;         //  Elevation of view angle
 int zh = 90;
-int axes=1;       //  Display axes
+int axes=0;       //  Display axes
 int mode=1;       //  Projection type
 double dim=20;     // Size of scene
 double asp=1;     // Aspect ratio
