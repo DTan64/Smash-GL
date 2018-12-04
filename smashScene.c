@@ -623,13 +623,10 @@ static void whispy(double x, double y, double z)
   glScaled(0.5,.5,.5);
   glBegin(GL_TRIANGLES);
   for (th = 0; th <= 360; th += 2 * d) {
-    glNormal3d(Cos(th-d), 1, Sin(th-d));
     glTexCoord2d((th-d)/360.0, 0);
     glVertex3d(Cos(th-d), 0, Sin(th-d));
-    glNormal3d(Cos(th), 1, Sin(th));
     glTexCoord2d(th/360.0, 1);
     glVertex3d(0, -5, 0);
-    glNormal3d(Cos(th+d), 1, Sin(th+d));
     glTexCoord2d((th+d)/360.0, 0);
     glVertex3d(Cos(th+d), 0, Sin(th+d));
   }
@@ -644,7 +641,6 @@ static void whispy(double x, double y, double z)
   glScaled(0.5,.5,.5);
   glBegin(GL_TRIANGLES);
   for (th = 0; th <= 360; th += 2 * d) {
-    glNormal3d(Cos(th-d), 1, Sin(th-d));
     glTexCoord2d((th-d)/360.0, 0);
     glVertex3d(Cos(th-d), 0, Sin(th-d));
     glNormal3d(Cos(th), 1, Sin(th));
@@ -656,7 +652,6 @@ static void whispy(double x, double y, double z)
   }
   glEnd();
   glPopMatrix();
-
 
   // Nose
   glPushMatrix();
@@ -679,64 +674,6 @@ static void whispy(double x, double y, double z)
   glEnd();
   glPopMatrix();
 
-  // // Cube leaves
-  // glPushMatrix();
-  // glTranslated(x, y + 4, z);
-  // glScaled(2,2,2);
-  //
-  // // Front
-  // glColor3f(0.4, 0.84, 0.44);
-  // glBindTexture(GL_TEXTURE_2D,texture[7]);
-  // glBegin(GL_QUADS);
-  // glTexCoord2f(0,0); glVertex3f(-1,-1, 1);
-  // glTexCoord2f(1,0); glVertex3f(+1,-1, 1);
-  // glTexCoord2f(1,1); glVertex3f(+1,+1, 1);
-  // glTexCoord2f(0,1); glVertex3f(-1,+1, 1);
-  // glEnd();
-  //
-  // // Back
-  // glBegin(GL_QUADS);
-  // glTexCoord2f(0,0); glVertex3f(+1,-1,-1);
-  // glTexCoord2f(1,0); glVertex3f(-1,-1,-1);
-  // glTexCoord2f(1,1); glVertex3f(-1,+1,-1);
-  // glTexCoord2f(0,1); glVertex3f(+1,+1,-1);
-  // glEnd();
-  //
-  // // Right
-  // glBegin(GL_QUADS);
-  // glTexCoord2f(0,0); glVertex3f(+1,-1,+1);
-  // glTexCoord2f(1,0); glVertex3f(+1,-1,-1);
-  // glTexCoord2f(1,1); glVertex3f(+1,+1,-1);
-  // glTexCoord2f(0,1); glVertex3f(+1,+1,+1);
-  // glEnd();
-  //
-  // // Left
-  // glBegin(GL_QUADS);
-  // glTexCoord2f(0,0); glVertex3f(-1,-1,-1);
-  // glTexCoord2f(1,0); glVertex3f(-1,-1,+1);
-  // glTexCoord2f(1,1); glVertex3f(-1,+1,+1);
-  // glTexCoord2f(0,1); glVertex3f(-1,+1,-1);
-  // glEnd();
-  //
-  // // Top
-  // glBegin(GL_QUADS);
-  // glTexCoord2f(0,0); glVertex3f(-1,+1,+1);
-  // glTexCoord2f(1,0); glVertex3f(+1,+1,+1);
-  // glTexCoord2f(1,1); glVertex3f(+1,+1,-1);
-  // glTexCoord2f(0,1); glVertex3f(-1,+1,-1);
-  // glEnd();
-  //
-  // // Bottom
-  // glBegin(GL_QUADS);
-  // glTexCoord2f(0,0); glVertex3f(-1,-1,-1);
-  // glTexCoord2f(1,0); glVertex3f(+1,-1,-1);
-  // glTexCoord2f(1,1); glVertex3f(+1,-1,+1);
-  // glTexCoord2f(0,1); glVertex3f(-1,-1,+1);
-  //
-  //
-  // glEnd();
-  // glPopMatrix();
-
   // Sphere leaves
   glPushMatrix();
   glTranslated(x + 1.5, y + 5.5, z);
@@ -757,7 +694,6 @@ static void whispy(double x, double y, double z)
   glTranslated(x + 1, y + 5.5, z - 1);
   glScaled(1.7,1,1.7);
   glBindTexture(GL_TEXTURE_2D,texture[7]);
-  // Ice Cream
   for (ph=-90;ph<90;ph+=5) {
     glBegin(GL_QUAD_STRIP);
     for (th=0;th<=360;th+=5) {
@@ -772,7 +708,6 @@ static void whispy(double x, double y, double z)
   glTranslated(x - 1, y + 5.5, z - .5);
   glScaled(1.7,1,1.7);
   glBindTexture(GL_TEXTURE_2D,texture[7]);
-  // Ice Cream
   for (ph=-90;ph<90;ph+=5) {
     glBegin(GL_QUAD_STRIP);
     for (th=0;th<=360;th+=5) {
@@ -787,7 +722,34 @@ static void whispy(double x, double y, double z)
   glTranslated(x - .5, y + 5.5, z + .7);
   glScaled(1.7,1,1.7);
   glBindTexture(GL_TEXTURE_2D,texture[7]);
-  // Ice Cream
+  for (ph=-90;ph<90;ph+=5) {
+    glBegin(GL_QUAD_STRIP);
+    for (th=0;th<=360;th+=5) {
+      Vertex(th,ph);
+      Vertex(th,ph+5);
+    }
+    glEnd();
+  }
+  glPopMatrix();
+
+  glPushMatrix();
+  glTranslated(x - 2, y + 5.5, z + .7);
+  glScaled(1.7,1,1.7);
+  glBindTexture(GL_TEXTURE_2D,texture[7]);
+  for (ph=-90;ph<90;ph+=5) {
+    glBegin(GL_QUAD_STRIP);
+    for (th=0;th<=360;th+=5) {
+      Vertex(th,ph);
+      Vertex(th,ph+5);
+    }
+    glEnd();
+  }
+  glPopMatrix();
+
+  glPushMatrix();
+  glTranslated(x + 2, y + 5.5, z + .7);
+  glScaled(1.7,1,1.7);
+  glBindTexture(GL_TEXTURE_2D,texture[7]);
   for (ph=-90;ph<90;ph+=5) {
     glBegin(GL_QUAD_STRIP);
     for (th=0;th<=360;th+=5) {
@@ -802,7 +764,6 @@ static void whispy(double x, double y, double z)
   glTranslated(x, y + 5.5, z - 1.5);
   glScaled(1.7,1,1.7);
   glBindTexture(GL_TEXTURE_2D,texture[7]);
-  // Ice Cream
   for (ph=-90;ph<90;ph+=5) {
     glBegin(GL_QUAD_STRIP);
     for (th=0;th<=360;th+=5) {
@@ -813,12 +774,10 @@ static void whispy(double x, double y, double z)
   }
   glPopMatrix();
 
-
   glPushMatrix();
   glTranslated(x - 1.5, y + 6.5, z);
   glScaled(1.7,1,1.7);
   glBindTexture(GL_TEXTURE_2D,texture[7]);
-  // Ice Cream
   for (ph=-90;ph<90;ph+=5) {
     glBegin(GL_QUAD_STRIP);
     for (th=0;th<=360;th+=5) {
@@ -833,7 +792,6 @@ static void whispy(double x, double y, double z)
   glTranslated(x + 2, y + 6.5, z);
   glScaled(1.7,1,1.7);
   glBindTexture(GL_TEXTURE_2D,texture[7]);
-  // Ice Cream
   for (ph=-90;ph<90;ph+=5) {
     glBegin(GL_QUAD_STRIP);
     for (th=0;th<=360;th+=5) {
@@ -844,13 +802,10 @@ static void whispy(double x, double y, double z)
   }
   glPopMatrix();
 
-
-
   glPushMatrix();
   glTranslated(x, y + 6.5, z);
   glScaled(1.7,1,1.7);
   glBindTexture(GL_TEXTURE_2D,texture[7]);
-  // Ice Cream
   for (ph=-90;ph<90;ph+=5) {
     glBegin(GL_QUAD_STRIP);
     for (th=0;th<=360;th+=5) {
@@ -865,7 +820,6 @@ static void whispy(double x, double y, double z)
   glTranslated(x, y + 7, z);
   glScaled(1.7,1,1.7);
   glBindTexture(GL_TEXTURE_2D,texture[7]);
-  // Ice Cream
   for (ph=-90;ph<90;ph+=5) {
     glBegin(GL_QUAD_STRIP);
     for (th=0;th<=360;th+=5) {
@@ -875,15 +829,7 @@ static void whispy(double x, double y, double z)
     glEnd();
   }
   glPopMatrix();
-
-
-
-
-
-
-
   glDisable(GL_TEXTURE_2D);
-
 
   // Eye
   glPushMatrix();
