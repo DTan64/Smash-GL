@@ -29,16 +29,17 @@
 #include "CSCIx229.h"
 
 int th=0;         //  Azimuth of view angle
-int ph=0;         //  Elevation of view angle
+int ph=25;         //  Elevation of view angle
 int zh = 90;
 int axes=1;       //  Display axes
 int mode=1;       //  Projection type
-double dim=15;     // Size of scene
+double dim=20;     // Size of scene
 double asp=1;     // Aspect ratio
 int fov = 55;     // Field of view
 int fp = 0;
 int kirbyObj = 0;
 int pikaObj = 0;
+int yoshiObj = 0;
 int distance = 20;
 double rotation = 0.0;
 float ylight  =   0;  // Elevation of light
@@ -71,6 +72,18 @@ void Print(const char* format , ...)
    //  Display the characters one at a time at the current raster position
    while (*ch)
       glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,*ch++);
+}
+
+static void Vertex(double th,double ph)
+{
+   double x = Sin(th)*Cos(ph);
+   double y = Cos(th)*Cos(ph);
+   double z =         Sin(ph);
+   //  For a sphere at the origin, the position
+   //  and normal vectors are the same
+   glNormal3d(x,y,z);
+   glTexCoord2d(th/360.0,ph/180.0+0.5);
+   glVertex3d(x,y,z);
 }
 
 static void platform(double x, double y, double z)
@@ -585,20 +598,18 @@ static void whispy(double x, double y, double z)
   glEnd();
   glPopMatrix();
 
-
+  // Roots
   glPushMatrix();
-  glTranslated(x + 1.5, y, z);
+  glTranslated(x + 1.9, y, z);
   glRotatef(90, 0, 0,1);
+  glRotatef(90, 0, 1,0);
   glScaled(0.5,.5,.5);
   glBegin(GL_TRIANGLES);
-  for (th = 0; th <= 360; th += 2 * d) {
-    glNormal3d(Cos(th-d), 1, Sin(th-d));
+  for (th = 0; th <= 180; th += 2 * d) {
     glTexCoord2d((th-d)/360.0, 0);
     glVertex3d(Cos(th-d), 0, Sin(th-d));
-    glNormal3d(Cos(th), 1, Sin(th));
     glTexCoord2d(th/360.0, 1);
     glVertex3d(0, -5, 0);
-    glNormal3d(Cos(th+d), 1, Sin(th+d));
     glTexCoord2d((th+d)/360.0, 0);
     glVertex3d(Cos(th+d), 0, Sin(th+d));
   }
@@ -725,6 +736,148 @@ static void whispy(double x, double y, double z)
   //
   // glEnd();
   // glPopMatrix();
+
+  // Sphere leaves
+  glPushMatrix();
+  glTranslated(x + 1.5, y + 5.5, z);
+  glScaled(1.7,1,1.7);
+  glBindTexture(GL_TEXTURE_2D,texture[7]);
+  // Ice Cream
+  for (ph=-90;ph<90;ph+=5) {
+    glBegin(GL_QUAD_STRIP);
+    for (th=0;th<=360;th+=5) {
+      Vertex(th,ph);
+      Vertex(th,ph+5);
+    }
+    glEnd();
+  }
+  glPopMatrix();
+
+  glPushMatrix();
+  glTranslated(x + 1, y + 5.5, z - 1);
+  glScaled(1.7,1,1.7);
+  glBindTexture(GL_TEXTURE_2D,texture[7]);
+  // Ice Cream
+  for (ph=-90;ph<90;ph+=5) {
+    glBegin(GL_QUAD_STRIP);
+    for (th=0;th<=360;th+=5) {
+      Vertex(th,ph);
+      Vertex(th,ph+5);
+    }
+    glEnd();
+  }
+  glPopMatrix();
+
+  glPushMatrix();
+  glTranslated(x - 1, y + 5.5, z - .5);
+  glScaled(1.7,1,1.7);
+  glBindTexture(GL_TEXTURE_2D,texture[7]);
+  // Ice Cream
+  for (ph=-90;ph<90;ph+=5) {
+    glBegin(GL_QUAD_STRIP);
+    for (th=0;th<=360;th+=5) {
+      Vertex(th,ph);
+      Vertex(th,ph+5);
+    }
+    glEnd();
+  }
+  glPopMatrix();
+
+  glPushMatrix();
+  glTranslated(x - .5, y + 5.5, z + .7);
+  glScaled(1.7,1,1.7);
+  glBindTexture(GL_TEXTURE_2D,texture[7]);
+  // Ice Cream
+  for (ph=-90;ph<90;ph+=5) {
+    glBegin(GL_QUAD_STRIP);
+    for (th=0;th<=360;th+=5) {
+      Vertex(th,ph);
+      Vertex(th,ph+5);
+    }
+    glEnd();
+  }
+  glPopMatrix();
+
+  glPushMatrix();
+  glTranslated(x, y + 5.5, z - 1.5);
+  glScaled(1.7,1,1.7);
+  glBindTexture(GL_TEXTURE_2D,texture[7]);
+  // Ice Cream
+  for (ph=-90;ph<90;ph+=5) {
+    glBegin(GL_QUAD_STRIP);
+    for (th=0;th<=360;th+=5) {
+      Vertex(th,ph);
+      Vertex(th,ph+5);
+    }
+    glEnd();
+  }
+  glPopMatrix();
+
+
+  glPushMatrix();
+  glTranslated(x - 1.5, y + 6.5, z);
+  glScaled(1.7,1,1.7);
+  glBindTexture(GL_TEXTURE_2D,texture[7]);
+  // Ice Cream
+  for (ph=-90;ph<90;ph+=5) {
+    glBegin(GL_QUAD_STRIP);
+    for (th=0;th<=360;th+=5) {
+      Vertex(th,ph);
+      Vertex(th,ph+5);
+    }
+    glEnd();
+  }
+  glPopMatrix();
+
+  glPushMatrix();
+  glTranslated(x + 2, y + 6.5, z);
+  glScaled(1.7,1,1.7);
+  glBindTexture(GL_TEXTURE_2D,texture[7]);
+  // Ice Cream
+  for (ph=-90;ph<90;ph+=5) {
+    glBegin(GL_QUAD_STRIP);
+    for (th=0;th<=360;th+=5) {
+      Vertex(th,ph);
+      Vertex(th,ph+5);
+    }
+    glEnd();
+  }
+  glPopMatrix();
+
+
+
+  glPushMatrix();
+  glTranslated(x, y + 6.5, z);
+  glScaled(1.7,1,1.7);
+  glBindTexture(GL_TEXTURE_2D,texture[7]);
+  // Ice Cream
+  for (ph=-90;ph<90;ph+=5) {
+    glBegin(GL_QUAD_STRIP);
+    for (th=0;th<=360;th+=5) {
+      Vertex(th,ph);
+      Vertex(th,ph+5);
+    }
+    glEnd();
+  }
+  glPopMatrix();
+
+  glPushMatrix();
+  glTranslated(x, y + 7, z);
+  glScaled(1.7,1,1.7);
+  glBindTexture(GL_TEXTURE_2D,texture[7]);
+  // Ice Cream
+  for (ph=-90;ph<90;ph+=5) {
+    glBegin(GL_QUAD_STRIP);
+    for (th=0;th<=360;th+=5) {
+      Vertex(th,ph);
+      Vertex(th,ph+5);
+    }
+    glEnd();
+  }
+  glPopMatrix();
+
+
+
 
 
 
@@ -858,6 +1011,19 @@ static void pika(double x, double y, double z)
 
 }
 
+static void yoshi(double x, double y, double z)
+{
+
+  glPushMatrix();
+  glTranslated(x + 7, y + 10, z -4);
+  glRotatef(-90, 0 ,1, 0);
+  glScaled(6,6,6);
+  glCallList(yoshiObj);
+  glPopMatrix();
+
+
+}
+
 /*
  *  OpenGL (GLUT) calls this routine to display the scene
  */
@@ -881,6 +1047,7 @@ void display()
    float Position[]  = {distance*Cos(zh),ylight,distance*Sin(zh),1.0};
    kirby(Position[0],Position[1],Position[2] , 0.1);
    pika(0,0,0);
+   yoshi(0,0,0);
 
    glPushMatrix();
    glTranslated(-3.4,10, -4);
@@ -1064,6 +1231,7 @@ int main(int argc,char* argv[])
    // Objects
    kirbyObj = LoadOBJ("kirby.obj");
    pikaObj = LoadOBJ("pika.obj");
+   yoshiObj = LoadOBJ("yoshi.obj");
 
    //  Pass control to GLUT so it can interact with the user
    ErrCheck("init");
