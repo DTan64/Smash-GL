@@ -47,6 +47,7 @@ float ylight  =   0;  // Elevation of light
 // TODO: Implement first person view
 double fpx = 0.0;
 double fpz = 0.0;
+double fpy = 0.0;
 double epx = 0.0;
 double epy = 0.0;
 double epz = 5.0;
@@ -987,7 +988,15 @@ void display()
    double Ex = -2*dim*Sin(th)*Cos(ph);
    double Ey = +2*dim        *Sin(ph);
    double Ez = +2*dim*Cos(th)*Cos(ph);
-   gluLookAt(Ex,Ey,Ez , 0,0,0 , 0,Cos(ph),0);
+   if(fp) {
+     fpx = 2 * dim * Sin(rotation);
+     fpz = 2 * dim * -Cos(rotation);
+     gluLookAt(epx, epy + fpy, epz, fpx + epx, epy, fpz + epz, 0, 1, 0);
+   }
+   else {
+     gluLookAt(Ex,Ey,Ez , 0,0,0 , 0,Cos(ph),0);
+   }
+
    Sky(2*dim);
 
    float Position[]  = {distance*Cos(zh),ylight,distance*Sin(zh),1.0};
@@ -1114,6 +1123,10 @@ void keyboard(unsigned char key,int x,int y)
      mode = 1 - mode;
    }
 
+   if(key == 'f') {
+     fp = 1 - fp;
+   }
+
    if(key == 'a') {
      axes = 1 - axes;
    }
@@ -1126,6 +1139,35 @@ void keyboard(unsigned char key,int x,int y)
      dim += 1;
    }
 
+   if(fp) {
+     double tt = .1;
+
+     if (key=='i') {
+       epx += fpx * tt;
+       epz += fpz * tt;
+     }
+
+     if(key == 'w') {
+       fpy += 1;
+     }
+
+     if(key == 's') {
+       fpy -= 1;
+     }
+
+     if (key=='k') {
+       epx -= fpx * tt;
+       epz -= fpz * tt;
+     }
+
+     if (key=='d') {
+       rotation += 1;
+     }
+
+     if (key=='a') {
+       rotation -= 1;
+     }
+   }
    Project(fov, asp, dim);
    glutPostRedisplay();
 }
