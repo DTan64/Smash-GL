@@ -1127,7 +1127,7 @@ void keyboard(unsigned char key,int x,int y)
      fp = 1 - fp;
    }
 
-   if(key == 'a') {
+   if(key == 'A') {
      axes = 1 - axes;
    }
 
