@@ -1,25 +1,7 @@
-/*
- *  3D Objects
- *
- *  Demonstrates how to draw objects in 3D.
- *
- *  Key bindings:
- *  m/M                   Toggle Perspective mode
- *  f                     First person view
- *  w                     Move forward
- *  s                     Move backwards
- *  a                     Look left
- *  d                     Look right
- *  up/dow arrow          +/- Elevation
- *  Right/left arrow      +/- Azimuth
- *  0                     Reset view angle in Perspective/Orthogonal mode
- *  ESC                   Exit
- */
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
 #include <math.h>
-//  OpenGL with prototypes for glext
 #define GL_GLEXT_PROTOTYPES
 #ifdef __APPLE__
 #include <GLUT/glut.h>
@@ -42,9 +24,9 @@ int pikaObj = 0;
 int yoshiObj = 0;
 int distance = 20;
 double rotation = 0.0;
-float ylight  =   0;  // Elevation of light
+float kirby_y  =   0;  // Elevation of light
 
-// TODO: Implement first person view
+// First person view
 double fpx = 0.0;
 double fpz = 0.0;
 double fpy = 0.0;
@@ -52,12 +34,13 @@ double epx = 0.0;
 double epy = 0.0;
 double epz = 5.0;
 
+// Textures
 unsigned int texture[8]; // Texture names
-int sky[2];   //  Sky textures
+int sky[1];   //  Sky textures
 
+// Mouse
 // Camera position
 float camera_x = 0.0, camera_z = 30; // initially 5 units south of origin
-float deltaMove = 0.0; // initially camera doesn't move
 
 // Camera direction
 float lx = 0, lz = -1; // camera points initially along y-axis
@@ -68,13 +51,10 @@ float deltaAngle = 0.0; // additional angle change when dragging
 int isDragging = 0; // true when dragging
 int xDragStart = 0; // records the x-coordinate when dragging starts
 
-/*
- *  Convenience routine to output raster text
- *  Use VARARGS to make this more flexible
- */
 #define LEN 8192  //  Maximum length of text string
 void Print(const char* format , ...)
 {
+
    char    buf[LEN];
    char*   ch=buf;
    va_list args;
@@ -85,24 +65,25 @@ void Print(const char* format , ...)
    //  Display the characters one at a time at the current raster position
    while (*ch)
       glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,*ch++);
+
 }
 
 static void Vertex(double th,double ph)
 {
+
    double x = Sin(th)*Cos(ph);
    double y = Cos(th)*Cos(ph);
    double z =         Sin(ph);
-   //  For a sphere at the origin, the position
-   //  and normal vectors are the same
    glNormal3d(x,y,z);
    glTexCoord2d(th/360.0,ph/180.0+0.5);
    glVertex3d(x,y,z);
+
 }
 
 static void platform(double x, double y, double z)
 {
 
-  int th, ph;
+  int th;
   const int d = 5;
   float pi = 3.141592654f;
   float numberOfSegments = 64;
@@ -131,13 +112,11 @@ static void platform(double x, double y, double z)
   glTranslated(x, y - 1.5, z);
   glScaled(1, 3, .5);
   glBegin(GL_QUAD_STRIP);
-  for (unsigned int i = 0; i <= 32; ++i)
-  {
-      float c = cos(angleIncrement * i);
-      float s = sin(angleIncrement * i);
-
-      glTexCoord2f( textureCoordinateIncrement * i, 1.0f); glVertex3f( c, 0, s);
-      glTexCoord2f( textureCoordinateIncrement * i, 0); glVertex3f( c, .5, s);
+  for (unsigned int i = 0; i <= 32; ++i) {
+    float c = cos(angleIncrement * i);
+    float s = sin(angleIncrement * i);
+    glTexCoord2f( textureCoordinateIncrement * i, 1.0f); glVertex3f( c, 0, s);
+    glTexCoord2f( textureCoordinateIncrement * i, 0); glVertex3f( c, .5, s);
   }
   glEnd();
   glPopMatrix();
@@ -193,17 +172,10 @@ static void platform(double x, double y, double z)
   glPopMatrix();
   glDisable(GL_TEXTURE_2D);
 
-
-
-
 }
 
 static void stage(double x, double y, double z)
 {
-
-  int th, ph;
-  const int d = 5;
-
   // Top
   glPushMatrix();
   glTranslated(x, y + 3, z);
@@ -218,10 +190,10 @@ static void stage(double x, double y, double z)
   glEnd();
   glPopMatrix();
 
-  /*// From arrow up
-  // Starting at index 1
-  // Starting at point front left
-  // Numbering rotating to the right
+  /* From arrow up
+  Starting at index 1
+  Starting at point front left
+  Numbering rotating to the right
 
   glBegin(GL_POLYGON);
   glVertex3f(-1,  0, .5); // 1
@@ -365,7 +337,6 @@ static void stage(double x, double y, double z)
   glTexCoord2d(1,1); glVertex3f(-1, 0, -3);
   glTexCoord2d(1,0); glVertex3f(-1, -.5, -3);
   glTexCoord2d(0,0); glVertex3f(-2, -.5, -2.2);
-
   glEnd();
   glPopMatrix();
 
@@ -429,7 +400,6 @@ static void stage(double x, double y, double z)
   // Completion
   glTexCoord2f(0,0.2); glVertex3f(0, 0, 0);
   glTexCoord2f(0,1); glVertex3f(0, 1, .5);
-
   glEnd();
   glPopMatrix();
 
@@ -601,8 +571,7 @@ static void whispy(double x, double y, double z)
   glEnable(GL_TEXTURE_2D);
   glBindTexture(GL_TEXTURE_2D,texture[6]);
   glBegin(GL_QUAD_STRIP);
-  for (unsigned int i = 0; i <= numberOfSegments; ++i)
-  {
+  for (unsigned int i = 0; i <= numberOfSegments; ++i) {
       float c = cos(angleIncrement * i);
       float s = sin(angleIncrement * i);
       glTexCoord2f( textureCoordinateIncrement * i, 0); glVertex3f( c, 0, s);
@@ -692,7 +661,6 @@ static void whispy(double x, double y, double z)
   glTranslated(x + 1.5, y + 5.5, z);
   glScaled(1.7,1,1.7);
   glBindTexture(GL_TEXTURE_2D,texture[7]);
-  // Ice Cream
   for (ph=-90;ph<90;ph+=5) {
     glBegin(GL_QUAD_STRIP);
     for (th=0;th<=360;th+=5) {
@@ -892,6 +860,7 @@ static void whispy(double x, double y, double z)
 
 static void Sky(double D)
 {
+
    glColor3f(1,1,1);
    glEnable(GL_TEXTURE_2D);
 
@@ -920,7 +889,6 @@ static void Sky(double D)
    glEnd();
 
    //  Top and bottom
-   //glBindTexture(GL_TEXTURE_2D,sky[1]);
    glBegin(GL_QUADS);
    glTexCoord2f(0,0.7); glVertex3f(+D,+D,-D);
    glTexCoord2f(0.3,0.7); glVertex3f(+D,+D,+D);
@@ -932,8 +900,8 @@ static void Sky(double D)
    glTexCoord2f(0.3,1); glVertex3f(+D,-D,-D);
    glTexCoord2f(0,1); glVertex3f(-D,-D,-D);
    glEnd();
-
    glDisable(GL_TEXTURE_2D);
+
 }
 
 void update()
@@ -941,8 +909,8 @@ void update()
    //  Elapsed time in seconds
    double t = glutGet(GLUT_ELAPSED_TIME)/1000.0;
    zh = fmod(90*t,360.0);
-   //  Tell GLUT it is necessary to redisplay the scene
    glutPostRedisplay();
+
 }
 
 
@@ -983,9 +951,6 @@ static void yoshi(double x, double y, double z)
 
 }
 
-/*
- *  OpenGL (GLUT) calls this routine to display the scene
- */
 void display()
 {
    const double len=1.5;  //  Length of axes
@@ -1004,22 +969,20 @@ void display()
   			0.0,    1,    0);
    }
 
-   //  Perspective - set eye position
-   double Ex = -2*dim*Sin(th)*Cos(ph);
-   double Ey = +2*dim        *Sin(ph);
-   double Ez = +2*dim*Cos(th)*Cos(ph);
    if(fp) {
      fpx = 2 * dim * Sin(rotation);
      fpz = 2 * dim * -Cos(rotation);
      gluLookAt(epx, epy + fpy, epz, fpx + epx, epy, fpz + epz, 0, 1, 0);
    }
    if(fp == 0 && mouse ==0) {
+     double Ex = -2*dim*Sin(th)*Cos(ph);
+     double Ey = +2*dim        *Sin(ph);
+     double Ez = +2*dim*Cos(th)*Cos(ph);
      gluLookAt(Ex,Ey,Ez , 0,0,0 , 0,Cos(ph),0);
    }
 
    Sky(2*dim);
-
-   float Position[]  = {distance*Cos(zh),ylight,distance*Sin(zh),1.0};
+   float Position[]  = {distance*Cos(zh),kirby_y,distance*Sin(zh),1.0};
    kirby(Position[0],Position[1],Position[2] , 0.1);
    pika(0,0,0);
    yoshi(0,0,0);
@@ -1053,20 +1016,13 @@ void display()
    stage(0,0,0);
    glPopMatrix();
 
-
    glPushMatrix();
    glTranslated(0, 6, -9);
    glScaled(1, 1.4, 1);
    whispy(0, 0, 0);
    glPopMatrix();
 
-
-
-
-
-   //  White
    glColor3f(1,1,1);
-   //  Draw axes
    if (axes)
    {
       glBegin(GL_LINES);
@@ -1102,15 +1058,13 @@ void display()
    glFlush();
    //  Make the rendered scene visible
    glutSwapBuffers();
+
 }
 
-/*
- *  GLUT calls this routine when an arrow key is pressed
- */
 void special(int key,int x,int y)
 {
 
-  if(!fp) {
+  if(!fp && !mouse) {
    //  Right arrow key - increase angle by 5 degrees
    if (key == GLUT_KEY_RIGHT)
       th += 5;
@@ -1129,13 +1083,10 @@ void special(int key,int x,int y)
 
   }
    Project(fov, asp, dim);
-   //  Tell GLUT it is necessary to redisplay the scene
    glutPostRedisplay();
+
 }
 
-/*
- *  GLUT calls this routine when a key is pressed
- */
 void keyboard(unsigned char key,int x,int y)
 {
 
@@ -1188,7 +1139,6 @@ void keyboard(unsigned char key,int x,int y)
      }
    }
 
-
    if(fp) {
      double tt = .1;
 
@@ -1218,25 +1168,23 @@ void keyboard(unsigned char key,int x,int y)
        rotation -= 1.5;
      }
    }
+
    Project(fov, asp, dim);
    glutPostRedisplay();
+
 }
 
-
-/*
- *  GLUT calls this routine when the window is resized
- */
 void reshape(int width,int height)
 {
    //  Ratio of the width to the height of the window
    asp = (height>0) ? (double)width/height : 1;
-   //  Set the viewport to the entire window
    glViewport(0,0, width,height);
    Project(fov, asp, dim);
 }
 
 void mouseMove(int x, int y)
 {
+
 	if (isDragging) { // only when dragging
 		// update the change in angle
 		deltaAngle = (x - xDragStart) * 0.005;
@@ -1245,10 +1193,12 @@ void mouseMove(int x, int y)
 		lx = sin(angle + deltaAngle);
 		lz = -cos(angle + deltaAngle);
 	}
+
 }
 
 void mouseButton(int button, int state, int x, int y)
 {
+
 	if (button == GLUT_LEFT_BUTTON) {
 		if (state == GLUT_DOWN) { // left mouse button pressed
 			isDragging = 1; // start dragging
@@ -1259,11 +1209,9 @@ void mouseButton(int button, int state, int x, int y)
 			isDragging = 0; // no longer dragging
 		}
 	}
+
 }
 
-/*
- *  Start up GLUT and tell it what to do
- */
 int main(int argc,char* argv[])
 {
    //  Initialize GLUT and process user parameters
