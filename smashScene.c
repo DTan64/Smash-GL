@@ -1088,15 +1088,14 @@ void display()
    //  Five pixels from the lower left corner of the window
    glWindowPos2i(5,25);
    //  Print the text string
-   Print("Angle=%d,%d",th,ph);
    if(fp) {
-     Print(" Camera: First Person");
+     Print("Camera: First Person");
    }
    else if(mouse) {
-     Print(" Camera: Mouse");
+     Print("Camera: Mouse");
    }
    else {
-     Print(" Camera: Perpective");
+     Print("Camera: Perpective");
    }
    //  Render the scene
    ErrCheck("display");
@@ -1110,6 +1109,7 @@ void display()
  */
 void special(int key,int x,int y)
 {
+  
   if(!fp) {
    //  Right arrow key - increase angle by 5 degrees
    if (key == GLUT_KEY_RIGHT)
@@ -1173,7 +1173,7 @@ void keyboard(unsigned char key,int x,int y)
        dim += 1;
      }
    }
-   
+
    if(mouse) {
      double tm = 1;
 
