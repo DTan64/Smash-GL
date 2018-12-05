@@ -1089,6 +1089,15 @@ void display()
    glWindowPos2i(5,25);
    //  Print the text string
    Print("Angle=%d,%d",th,ph);
+   if(fp) {
+     Print(" Camera: First Person");
+   }
+   else if(mouse) {
+     Print(" Camera: Mouse");
+   }
+   else {
+     Print(" Camera: Perpective");
+   }
    //  Render the scene
    ErrCheck("display");
    glFlush();
@@ -1130,7 +1139,6 @@ void special(int key,int x,int y)
 void keyboard(unsigned char key,int x,int y)
 {
 
-
    if (key==27) {
      exit(0);
    }
@@ -1138,24 +1146,15 @@ void keyboard(unsigned char key,int x,int y)
    if (key == '0')
       th = ph = 0;
    //  Toggle axes
+   if(key == 'A') {
+     axes = 1 - axes;
+   }
 
    if(key == 'f') {
      fp = 1 - fp;
      if(fp) {
        mouse = 0;
      }
-   }
-
-   if(key == 'A') {
-     axes = 1 - axes;
-   }
-
-   if(key == '+') {
-     dim -= 1;
-   }
-
-   if(key == '-') {
-     dim += 1;
    }
 
    if(key == 'm') {
@@ -1165,6 +1164,16 @@ void keyboard(unsigned char key,int x,int y)
      }
    }
 
+   if(fp == 0 && mouse == 0) {
+     if(key == '+') {
+       dim -= 1;
+     }
+
+     if(key == '-') {
+       dim += 1;
+     }
+   }
+   
    if(mouse) {
      double tm = 1;
 
