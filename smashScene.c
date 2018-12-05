@@ -1109,7 +1109,7 @@ void display()
  */
 void special(int key,int x,int y)
 {
-  
+
   if(!fp) {
    //  Right arrow key - increase angle by 5 degrees
    if (key == GLUT_KEY_RIGHT)
@@ -1192,22 +1192,22 @@ void keyboard(unsigned char key,int x,int y)
    if(fp) {
      double tt = .1;
 
-     if (key=='i') {
+     if (key=='w') {
        epx += fpx * tt;
        epz += fpz * tt;
      }
 
-     if(key == 'w') {
+     if (key=='s') {
+       epx -= fpx * tt;
+       epz -= fpz * tt;
+     }
+
+     if(key == 'i') {
        fpy += 1;
      }
 
-     if(key == 's') {
+     if(key == 'k') {
        fpy -= 1;
-     }
-
-     if (key=='k') {
-       epx -= fpx * tt;
-       epz -= fpz * tt;
      }
 
      if (key=='d') {
