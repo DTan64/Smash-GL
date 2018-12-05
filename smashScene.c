@@ -32,11 +32,11 @@ int th=0;         //  Azimuth of view angle
 int ph=25;         //  Elevation of view angle
 int zh = 90;
 int axes=0;       //  Display axes
-int mode=1;       //  Projection type
 double dim=20;     // Size of scene
 double asp=1;     // Aspect ratio
 int fov = 55;     // Field of view
 int fp = 0;
+int mouse = 0;
 int kirbyObj = 0;
 int pikaObj = 0;
 int yoshiObj = 0;
@@ -55,6 +55,18 @@ double epz = 5.0;
 unsigned int texture[8]; // Texture names
 int sky[2];   //  Sky textures
 
+// Camera position
+float camera_x = 0.0, camera_z = 30; // initially 5 units south of origin
+float deltaMove = 0.0; // initially camera doesn't move
+
+// Camera direction
+float lx = 0, lz = -1; // camera points initially along y-axis
+float angle = 0.0; // angle of rotation for the camera direction
+float deltaAngle = 0.0; // additional angle change when dragging
+
+// Mouse drag control
+int isDragging = 0; // true when dragging
+int xDragStart = 0; // records the x-coordinate when dragging starts
 
 /*
  *  Convenience routine to output raster text
@@ -984,16 +996,24 @@ void display()
    //glEnable(GL_CULL_FACE);
    //  Undo previous transformations
    glLoadIdentity();
+
+   if(mouse) {
+     gluLookAt(
+  			camera_x,      8,      camera_z,
+  			camera_x + lx, 8, camera_z + lz,
+  			0.0,    1,    0);
+   }
+
    //  Perspective - set eye position
    double Ex = -2*dim*Sin(th)*Cos(ph);
    double Ey = +2*dim        *Sin(ph);
    double Ez = +2*dim*Cos(th)*Cos(ph);
    if(fp) {
-     fpx = 2 * dim * Sin(rotation);
-     fpz = 2 * dim * -Cos(rotation);
+     fpx = 2 * dim * -Sin(deltaAngle);
+     fpz = 2 * dim * Cos(deltaAngle);
      gluLookAt(epx, epy + fpy, epz, fpx + epx, epy, fpz + epz, 0, 1, 0);
    }
-   else {
+   if(fp == 0 && mouse ==0) {
      gluLookAt(Ex,Ey,Ez , 0,0,0 , 0,Cos(ph),0);
    }
 
@@ -1119,12 +1139,11 @@ void keyboard(unsigned char key,int x,int y)
       th = ph = 0;
    //  Toggle axes
 
-   if(key == 'p') {
-     mode = 1 - mode;
-   }
-
    if(key == 'f') {
      fp = 1 - fp;
+     if(fp) {
+       mouse = 0;
+     }
    }
 
    if(key == 'A') {
@@ -1138,6 +1157,28 @@ void keyboard(unsigned char key,int x,int y)
    if(key == '-') {
      dim += 1;
    }
+
+   if(key == 'm') {
+     mouse = 1 - mouse;
+     if(mouse) {
+       fp = 0;
+     }
+   }
+
+   if(mouse) {
+     double tm = 1;
+
+     if (key=='w') {
+       camera_x += lx * tm;
+       camera_z += lz * tm;
+     }
+
+     if (key=='s') {
+       camera_x -= lx * tm;
+       camera_z -= lz * tm;
+     }
+   }
+
 
    if(fp) {
      double tt = .1;
@@ -1185,6 +1226,32 @@ void reshape(int width,int height)
    Project(fov, asp, dim);
 }
 
+void mouseMove(int x, int y)
+{
+	if (isDragging) { // only when dragging
+		// update the change in angle
+		deltaAngle = (x - xDragStart) * 0.005;
+
+		// camera's direction is set to angle + deltaAngle
+		lx = sin(angle + deltaAngle);
+		lz = -cos(angle + deltaAngle);
+	}
+}
+
+void mouseButton(int button, int state, int x, int y)
+{
+	if (button == GLUT_LEFT_BUTTON) {
+		if (state == GLUT_DOWN) { // left mouse button pressed
+			isDragging = 1; // start dragging
+			xDragStart = x; // save x where button first pressed
+		}
+		else  { /* (state = GLUT_UP) */
+			angle += deltaAngle; // update camera turning angle
+			isDragging = 0; // no longer dragging
+		}
+	}
+}
+
 /*
  *  Start up GLUT and tell it what to do
  */
@@ -1205,6 +1272,8 @@ int main(int argc,char* argv[])
    glutSpecialFunc(special);
    //  Tell GLUT to call "key" when a key is pressed
    glutKeyboardFunc(keyboard);
+   glutMouseFunc(mouseButton); // process mouse button push/release
+	 glutMotionFunc(mouseMove); // process mouse dragging motion
    glutIdleFunc(update);
    texture[0] = LoadTexBMP("grass_side.bmp");
    texture[1] = LoadTexBMP("dirt_bottom.bmp");
