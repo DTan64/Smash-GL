@@ -1009,8 +1009,8 @@ void display()
    double Ey = +2*dim        *Sin(ph);
    double Ez = +2*dim*Cos(th)*Cos(ph);
    if(fp) {
-     fpx = 2 * dim * -Sin(deltaAngle);
-     fpz = 2 * dim * Cos(deltaAngle);
+     fpx = 2 * dim * Sin(rotation);
+     fpz = 2 * dim * -Cos(rotation);
      gluLookAt(epx, epy + fpy, epz, fpx + epx, epy, fpz + epz, 0, 1, 0);
    }
    if(fp == 0 && mouse ==0) {
@@ -1202,11 +1202,11 @@ void keyboard(unsigned char key,int x,int y)
      }
 
      if (key=='d') {
-       rotation += 1;
+       rotation += 1.5;
      }
 
      if (key=='a') {
-       rotation -= 1;
+       rotation -= 1.5;
      }
    }
    Project(fov, asp, dim);
