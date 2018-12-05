@@ -1,16 +1,29 @@
 # Smash Scene
-___
-#### I got the platforms working and the first part of the stage with textures. I only have the stage showing right now. To see the platform you will have to un comment platform(0,0,0). Going to finish it this weekend at the hackathon.
-
+#### D'Artagnan wake
+***
 # Controls
-___
+#### Esc: Exit
+#### f: Toggle first person mode
+#### m: Toggle mouse mode
+#### Perspective
+  * Left arrow: rotate left
+  * Right arrow: rotate right
+  * Up arrow: rotate up
+  * Down arrow: rotate down
+  * 0: reset view angle
 
-#### Arrow rotation controls.
-#### Plus/Minus to Zoom
-#### escape: esc
+#### First Person Mode
+  * w: move forward
+  * s: move back
+  * d: look right
+  * a: look left
+  * i: move up
+  * k: move down
 
-<br>
-<br>
-Time to completion: One hackathon
+#### Mouse Mode
+  * w: move forward
+  * s: move back
+  * Click and drag to look left/right
 
-To run: make compile; make run;
+# Compile and Run
+```make compile; make run;```

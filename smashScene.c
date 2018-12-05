@@ -1093,9 +1093,7 @@ void keyboard(unsigned char key,int x,int y)
    if (key==27) {
      exit(0);
    }
-   //  Reset view angle
-   if (key == '0')
-      th = ph = 0;
+   
    //  Toggle axes
    if(key == 'A') {
      axes = 1 - axes;
@@ -1123,6 +1121,10 @@ void keyboard(unsigned char key,int x,int y)
      if(key == '-') {
        dim += 1;
      }
+
+     //  Reset view angle
+     if (key == '0')
+        th = ph = 0;
    }
 
    if(mouse) {
